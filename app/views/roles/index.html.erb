@@ -1,0 +1,19 @@
+<h1>User Roles</h1>
+
+<% @users.each do |user| %>
+  <h3><%= user.email %></h3>
+
+  <%= form_tag assign_role_role_path(id: user.id), method: :post do %>
+    <%= select_tag :role, options_for_select(['Super Admin', 'Business Developer (BD)', 'Technical Manager', 'Engineer']) %>
+    <%= submit_tag 'Assign' %>
+  <% end %>
+<% Role.all.each do |role| %>
+  <% if user.has_role?(role.name) %>
+    <%= role.name %> - <%= button_to 'Remove', remove_role_role_path(user_id: user.id, id: role.id), method: :delete %>
+  <% end %>
+<% end %>
+
+
+
+  <hr>
+<% end %>
