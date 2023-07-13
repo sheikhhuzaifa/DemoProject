@@ -5,7 +5,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  def super_admin?
-      has_role?(:super_admin)
-  end
+
 end
