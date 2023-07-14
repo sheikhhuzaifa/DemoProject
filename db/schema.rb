@@ -10,10 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_12_202722) do
+ActiveRecord::Schema.define(version: 2023_07_14_113930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "leads", force: :cascade do |t|
+    t.string "project_name"
+    t.string "client_name"
+    t.string "client_address"
+    t.string "client_email"
+    t.string "client_contact"
+    t.string "platform_used"
+    t.text "comments"
+    t.string "test_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "bd_id"
+  end
+
+  create_table "phases", force: :cascade do |t|
+    t.string "phase_type"
+    t.date "start_date"
+    t.date "due_date"
+    t.text "comments"
+    t.date "creation_date"
+    t.boolean "completed"
+    t.date "completed_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "assignee_id"
+    t.integer "lead_id"
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string "name"
@@ -56,4 +84,7 @@ ActiveRecord::Schema.define(version: 2023_07_12_202722) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "leads", "users", column: "bd_id"
+  add_foreign_key "phases", "leads"
+  add_foreign_key "phases", "users", column: "assignee_id"
 end

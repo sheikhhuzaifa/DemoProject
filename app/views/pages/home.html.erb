@@ -1,6 +1,11 @@
-<% if user_signed_in? %>
-  <%= button_to "Log out", destroy_user_session_path, method: :delete %>
-  <%= current_user.username %>
-<% else %>
-  <%= link_to "Login", new_user_session_path %>
-<% end %>
+<nav class="nav">
+  <% if user_signed_in? %>
+
+    <% current_user.roles.each do |role| %>
+      <a class="nav-link"><%= role.name %></a>
+    <% end %>
+    <a class="nav-link" ><%= button_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-primary" %></a>
+  <% else %>
+    <a class="nav-link" ><%= link_to "Login", new_user_session_path, class: "btn btn-primary" %></a>
+  <% end %>
+</nav>

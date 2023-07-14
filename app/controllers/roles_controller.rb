@@ -9,7 +9,10 @@ class RolesController < ApplicationController
   def assign_role
     user = User.find(params[:id])
     role = Role.find_by(name: params[:role])
+    role_id = role.id
     authorize role
+
+
     user.add_role(params[:role])
     redirect_to roles_path, notice: "Role assigned successfully."
   end

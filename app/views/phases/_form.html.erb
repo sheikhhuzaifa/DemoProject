@@ -1,0 +1,40 @@
+<%= form_with(model: @phase, url: lead_phases_path(@lead), remote: true, class: "needs-validation") do |form| %>
+  <div class="form-group">
+    <%= form.label :phase_type %>
+    <%= form.text_field :phase_type, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :start_date %>
+    <%= form.date_field :start_date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :due_date %>
+    <%= form.date_field :due_date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :comments %>
+    <%= form.text_area :comments, class: "form-control"  %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :creation_date %>
+    <%= form.date_field :creation_date, class: "form-control" %>
+  </div>
+
+ <div class="form-group">
+  <%= form.label :completed %>
+  <%= form.check_box :completed, class: "form-check-input" %>
+</div>
+
+
+  <div class="form-group">
+    <%= form.label :completed_date %>
+    <%= form.date_field :completed_date, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

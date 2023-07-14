@@ -1,19 +1,25 @@
 <h1>User Roles</h1>
 
 <% @users.each do |user| %>
-  <h3><%= user.email %></h3>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h3 class="card-title"><%= user.email %></h3>
 
-  <%= form_tag assign_role_role_path(id: user.id), method: :post do %>
-    <%= select_tag :role, options_for_select(['Super Admin', 'Business Developer (BD)', 'Technical Manager', 'Engineer']) %>
-    <%= submit_tag 'Assign' %>
-  <% end %>
-<% Role.all.each do |role| %>
-  <% if user.has_role?(role.name) %>
-    <%= role.name %> - <%= button_to 'Remove', remove_role_role_path(user_id: user.id, id: role.id), method: :delete %>
-  <% end %>
-<% end %>
+      <%= form_tag assign_role_role_path(id: user.id), method: :post, class: "mb-3" do %>
+        <div class="form-group">
+          <%= select_tag :role, options_for_select(['Super Admin', 'Business Developer (BD)', 'Technical Manager', 'Engineer']), class: "form-control" %>
+        </div>
+        <%= submit_tag 'Assign', class: "btn btn-primary" %>
+      <% end %>
 
-
-
-  <hr>
+      <% Role.all.each do |role| %>
+        <% if user.has_role?(role.name) %>
+          <div class="d-flex align-items-center">
+            <span class="mr-2"><%= role.name %></span>
+            <%= button_to 'Remove', remove_role_role_path(user_id: user.id, id: role.id), method: :delete, class: "btn btn-danger btn-sm" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 <% end %>

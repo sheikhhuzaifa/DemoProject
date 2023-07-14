@@ -8,5 +8,9 @@ Rails.application.routes.draw do
       delete :remove_role
     end
   end
+
+  resources :leads do
+    resources :phases
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
