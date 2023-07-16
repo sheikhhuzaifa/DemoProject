@@ -6,11 +6,12 @@
       <h3 class="card-title"><%= user.email %></h3>
 
       <%= form_tag assign_role_role_path(id: user.id), method: :post, class: "mb-3" do %>
-        <div class="form-group">
-          <%= select_tag :role, options_for_select(['Super Admin', 'Business Developer (BD)', 'Technical Manager', 'Engineer']), class: "form-control" %>
-        </div>
-        <%= submit_tag 'Assign', class: "btn btn-primary" %>
-      <% end %>
+  <div class="form-group">
+    <%= select_tag :role, options_for_select(['Super_Admin', 'Business_Developer', 'Technical_Manager', 'Engineer'], selected: @selected_role), class: "form-control" %>
+  </div>
+  <%= submit_tag 'Assign', class: "btn btn-primary" %>
+<% end %>
+
 
       <% Role.all.each do |role| %>
         <% if user.has_role?(role.name) %>

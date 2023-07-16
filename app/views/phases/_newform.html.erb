@@ -1,4 +1,4 @@
-<%= form_with(model: @phase, url: lead_phases_path(@lead), remote: true, class: "needs-validation") do |form| %>
+<%= form_with(model: @phase, url: lead_phases_path(@lead) , remote: true, class: "needs-validation") do |form| %>
   <div class="form-group">
     <%= form.label :phase_type %>
     <%= form.text_field :phase_type, class: "form-control" %>

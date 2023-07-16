@@ -28,18 +28,10 @@
 
 <%= button_to 'New Phase', new_lead_phase_path, method: :get, remote: true, class: 'btn btn-primary', data: { toggle: 'modal', target: '#newPhaseModal' } %>
 
+
 <div class="modal fade" id="newPhaseModal" tabindex="-1" role="dialog" aria-labelledby="newPhaseModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header d-flex justify-content-end">
-        <button type="button" class="close btn btn-primary" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <h1>New Phase</h1>
-        <%= render 'form', phase: @phase %>
-      </div>
-    </div>
+
   </div>
 </div>

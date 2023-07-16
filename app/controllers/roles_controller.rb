@@ -8,14 +8,19 @@ class RolesController < ApplicationController
 
   def assign_role
     user = User.find(params[:id])
-    role = Role.find_by(name: params[:role])
-    role_id = role.id
-    authorize role
+    role_names = ['Super_Admin', 'Business_Developer', 'Technical_Manager', 'Engineer']
 
 
-    user.add_role(params[:role])
-    redirect_to roles_path, notice: "Role assigned successfully."
+
+    if role_names.include?(params[:role])
+      authorize Role
+      user.add_role(params[:role])
+      redirect_to roles_path, notice: "Role assigned successfully."
+    else
+      redirect_to roles_path, alert: "Invalid role selection."
+    end
   end
+
 
   def remove_role
     user = User.find(params[:user_id])

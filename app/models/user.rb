@@ -6,6 +6,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :leads
   has_many :phases
+  has_many :phase ,through: :phase_engineers
+  has_many :projects
 
 
 end
