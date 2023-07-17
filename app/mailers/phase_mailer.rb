@@ -7,7 +7,9 @@ class PhaseMailer < ApplicationMailer
   #
   def send_mail
     @phase = params[:phase]
+    user = User.find(@phase.assignee_id)
+    email = user.email
 
-    mail to: "to@example.org" ,subject: @phase.phase_type
+    mail to: email ,subject: @phase.phase_type
   end
 end

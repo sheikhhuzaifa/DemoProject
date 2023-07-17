@@ -11,6 +11,6 @@ class LeadPolicy <ApplicationPolicy
     user.roles.exists?(name: "Business_Developer")
   end
   def destroy?
-    (user.roles == "Business_Developer")
+    user.roles.exists?(name: "Business_Developer")
   end
 end

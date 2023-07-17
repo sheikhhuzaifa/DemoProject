@@ -6,9 +6,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :leads
   has_many :phases
-  has_many :phase ,through: :phase_engineers
+  has_and_belongs_to_many :phases, join_table: 'phase_participants'
   has_many :projects
-
 
 end
 
