@@ -1,6 +1,5 @@
 class RolesController < ApplicationController
   before_action :authenticate_user!
-  rescue_from   Pundit::NotAuthorizedError ,with: :handle_not_authorized
 
   def index
     @users = User.all
@@ -29,11 +28,5 @@ class RolesController < ApplicationController
     user.roles.delete(role)
     redirect_to roles_path, notice: "Role removed successfully."
   end
-
-  private
-  def handle_not_authorized(exception)
-    redirect_to root_path, alert: "You are not authorized to perform this action."
-  end
-
 
 end

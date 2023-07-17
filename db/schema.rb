@@ -29,13 +29,13 @@ ActiveRecord::Schema.define(version: 2023_07_15_134939) do
     t.integer "bd_id"
   end
 
-  create_table "phase_engineers", force: :cascade do |t|
+  create_table "phase_participants", force: :cascade do |t|
     t.bigint "phase_id"
-    t.bigint "engineer_id"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["engineer_id"], name: "index_phase_engineers_on_engineer_id"
-    t.index ["phase_id"], name: "index_phase_engineers_on_phase_id"
+    t.index ["phase_id"], name: "index_phase_participants_on_phase_id"
+    t.index ["user_id"], name: "index_phase_participants_on_user_id"
   end
 
   create_table "phases", force: :cascade do |t|
@@ -102,8 +102,8 @@ ActiveRecord::Schema.define(version: 2023_07_15_134939) do
   end
 
   add_foreign_key "leads", "users", column: "bd_id"
-  add_foreign_key "phase_engineers", "phases"
-  add_foreign_key "phase_engineers", "users", column: "engineer_id"
+  add_foreign_key "phase_participants", "phases"
+  add_foreign_key "phase_participants", "users"
   add_foreign_key "phases", "leads"
   add_foreign_key "phases", "users", column: "assignee_id"
   add_foreign_key "projects", "leads"

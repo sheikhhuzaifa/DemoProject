@@ -1,6 +1,5 @@
 class LeadsController < ApplicationController
   before_action :set_lead, only: [:show, :edit, :update, :destroy]
-  rescue_from   Pundit::NotAuthorizedError ,with: :handle_not_authorized
   def index
     @leads = Lead.all
   end
@@ -64,7 +63,5 @@ class LeadsController < ApplicationController
   def lead_params
     params.require(:lead).permit(:project_name, :client_name, :client_address, :client_email, :client_contact, :platform_used, :comments, :test_type,:bd_id)
   end
-  def handle_not_authorized(exception)
-    redirect_to root_path, alert: "You are not authorized to perform this action."
-  end
+
 end

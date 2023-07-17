@@ -34,6 +34,12 @@
     <%= form.label :completed_date %>
     <%= form.date_field :completed_date, class: "form-control" %>
   </div>
+<div class="form-group">
+  <%= form.label :assignee_id %>
+  <%= form.collection_select :assignee_id, Role.find_by(name: "Technical_Manager").users, :id, :username, prompt: "Select Technical Manager", class: "form-control" %>
+</div>
+
+
   <div class="form-group">
     <%= form.submit "Submit", class: "btn btn-primary" %>
   </div>
