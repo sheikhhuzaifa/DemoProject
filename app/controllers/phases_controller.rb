@@ -27,8 +27,11 @@ class PhasesController < ApplicationController
     @phase.lead_id = @lead.id
     authorize @phase
     if @phase.save
-      #PhaseMailer.with(phase: @phase).send_mail.deliver_now
-      redirect_to lead_phases_path
+      PhaseMailer.with(phase: @phase).send_mail.deliver_now
+      require 'launchy'
+      file_path = File.expand_path(Dir["tmp/letter_opener/*/plain.html"].first)
+      Launchy.open(file_path)
+
     else
       render :new
     end

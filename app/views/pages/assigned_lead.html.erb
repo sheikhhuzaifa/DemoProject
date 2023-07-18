@@ -1,0 +1,26 @@
+<div class="container">
+  <h3>Phase Details</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Phase Type</th>
+        <th>Add Engineer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @leads.each do |lead| %>
+        <% phases = Phase.joins(:lead).where(leads: { id: lead.id }).where(assignee_id: current_user.id) %>
+        <% phases.each do |phase| %>
+          <tr>
+            <td><%= lead.project_name %></td>
+            <td><%= phase.phase_type %></td>
+            <td>
+              <button class="btn btn-primary">Add Engineer</button>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -8,6 +8,6 @@ class RolePolicy <ApplicationPolicy
       user.super_admin?
      end
      def assign_role?
-      user.super_admin?
+        remove_role?
      end
 end

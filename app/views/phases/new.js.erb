@@ -4,3 +4,8 @@ $('#newPhaseModal').modal('show');
 $('.modal-header .close').click(function() {
      $('.modal').modal('hide');
 });
+ $(document).ready(function() {
+    $('#completed-checkbox').on('change', function() {
+      $('#completed-date-field').prop('disabled', this.checked);
+    });
+  });

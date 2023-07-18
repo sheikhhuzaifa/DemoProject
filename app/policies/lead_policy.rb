@@ -5,12 +5,13 @@ class LeadPolicy <ApplicationPolicy
    @lead=lead
   end
   def  update?
-     user.roles.exists?(name: "Business_Developer")
+    return true if user.super_admin?
+    user.roles.exists?(name: "Business_Developer")
   end
   def create?
-    user.roles.exists?(name: "Business_Developer")
+    update?
   end
   def destroy?
-    user.roles.exists?(name: "Business_Developer")
+    update?
   end
 end

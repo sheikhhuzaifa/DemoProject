@@ -13,5 +13,6 @@ Rails.application.routes.draw do
     resources :phases
   end
   resources :projects
+  get 'assigned', to: 'pages#assigned_lead', as: 'assigned_leads'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
