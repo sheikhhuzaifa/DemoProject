@@ -19,6 +19,8 @@
           <div class="button-group">
             <%= link_to 'Edit', edit_lead_phase_path(phase.lead, phase), remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editPhaseModal' } %>
             <%= link_to 'Delete', lead_phase_path(phase.lead, phase), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+
+
           </div>
         </td>
       </tr>
@@ -35,3 +37,4 @@
 
   </div>
 </div>
+

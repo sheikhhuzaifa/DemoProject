@@ -1,0 +1,6 @@
+
+$('#newProjectModal .modal-content').html("<%= j render 'new', project: @project %>");
+$('#newProjectModal').modal('show');
+$('.modal-header .close').click(function() {
+     $('.modal').modal('hide');
+});

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  def assigned_lead
-  @leads = Lead.all
+  def home
+   @leads = Lead.all
   end
 end

@@ -1,18 +1,22 @@
 Rails.application.routes.draw do
+  root to: "pages#home"
 
   devise_for :users
-  root to: "pages#home"
+
+  resources :leads do
+    resources :phases
+  end
+
+  resources :projects
+  resources :phases do
+    resources :engineers
+  end
+
+  get 'assigned', to: 'pages#assigned_lead', as: 'assigned_leads'
   resources :roles, only: [:index] do
     member do
       post :assign_role
       delete :remove_role
     end
   end
-
-  resources :leads do
-    resources :phases
-  end
-  resources :projects
-  get 'assigned', to: 'pages#assigned_lead', as: 'assigned_leads'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

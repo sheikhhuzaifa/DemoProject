@@ -4,11 +4,11 @@ class PhasesController < ApplicationController
 
 
   def index
-    @phases = @lead.phases.all
+    @phases = @lead.phases
   end
 
   def new
-    @phase = @lead.phases.new
+    @phase = @lead.phases.build
     respond_to do |format|
       format.html
       format.js
@@ -26,18 +26,20 @@ class PhasesController < ApplicationController
     @phase = @lead.phases.new(phase_params)
     @phase.lead_id = @lead.id
     authorize @phase
-    if @phase.save
-      PhaseMailer.with(phase: @phase).send_mail.deliver_now
-      require 'launchy'
-      file_path = File.expand_path(Dir["tmp/letter_opener/*/plain.html"].first)
-      Launchy.open(file_path)
 
+    if @phase.save
+      #PhaseMailer.with(phase: @phase).send_mail.deliver_now
+      #require 'launchy'
+      #file_path = File.expand_path(Dir["tmp/letter_opener/*/plain.html"].first)
+      #Launchy.open(file_path)
+      respond_to do |format|
+        format.html {redirect_to lead_phases_path}
+        format.js
+      end
     else
       render :new
     end
   end
-
-
 
   def edit
     respond_to do |format|
@@ -45,7 +47,6 @@ class PhasesController < ApplicationController
       format.js
     end
   end
-
 
   def update
     @phase.lead_id = @lead.id
@@ -57,6 +58,7 @@ class PhasesController < ApplicationController
       render :edit
     end
   end
+
   def destroy
     @phase = Phase.find(params[:id])
     authorize @phase

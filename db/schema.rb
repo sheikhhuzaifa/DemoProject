@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_15_134939) do
+ActiveRecord::Schema.define(version: 2023_07_18_134715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "engineers", force: :cascade do |t|
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "phase_id"
+  end
 
   create_table "leads", force: :cascade do |t|
     t.string "project_name"
@@ -41,13 +48,6 @@ ActiveRecord::Schema.define(version: 2023_07_15_134939) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "assignee_id"
     t.integer "lead_id"
-  end
-
-  create_table "phases_users", id: false, force: :cascade do |t|
-    t.bigint "phase_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["phase_id", "user_id"], name: "index_phases_users_on_phase_id_and_user_id"
-    t.index ["user_id", "phase_id"], name: "index_phases_users_on_user_id_and_phase_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 2023_07_15_134939) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "engineers", "phases"
   add_foreign_key "leads", "users", column: "bd_id"
   add_foreign_key "phases", "leads"
   add_foreign_key "phases", "users", column: "assignee_id"

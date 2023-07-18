@@ -1,0 +1,6 @@
+
+$('#newEngineerModal .modal-content').html("<%= j render 'edit', engineer: @engineer %>");
+$('#newEngineerModal').modal('show');
+$('.modal-header .close').click(function() {
+     $('.modal').modal('hide');
+});
