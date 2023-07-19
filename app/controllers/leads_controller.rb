@@ -52,7 +52,7 @@ class LeadsController < ApplicationController
 
   def destroy
     authorize @lead
-    lead.destroy ? (redirect_to leads_url, notice: "Lead was successfully destroyed.") : ('asdsadasd')
+    @lead.destroy ? (redirect_to leads_url, notice: "Lead was successfully destroyed.") : ('asdsadasd')
   end
 
   private
@@ -62,6 +62,6 @@ class LeadsController < ApplicationController
   end
 
   def lead_params
-    params.require(:lead).permit(:project_name, :client_name, :client_address, :client_email, :client_contact, :platform_used, :comments, :test_type,:bd_id)
+    params.require(:lead).permit(:project_name, :client_name, :client_address, :client_email, :client_contact, :platform_used, :test_type,:bd_id)
   end
 end

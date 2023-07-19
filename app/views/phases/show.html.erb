@@ -15,10 +15,7 @@
   <%= @phase.due_date %>
 </div>
 
-<div>
-  <strong>Comments:</strong>
-  <%= @phase.comments %>
-</div>
+
 
 <div>
   <strong>Creation Date:</strong>
@@ -34,3 +31,6 @@
   <strong>Completed Date:</strong>
   <%= @phase.completed_date %>
 </div>
+<h2>Comments:</h2>
+<%= render partial: "comments/comments", locals: { commentable: @phase } %>
+<%= render partial: "comments/form", locals: { commentable: @phase } %>

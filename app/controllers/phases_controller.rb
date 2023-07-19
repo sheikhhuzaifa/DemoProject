@@ -1,5 +1,5 @@
 class PhasesController < ApplicationController
-  before_action :set_lead
+  before_action :set_lead, except: :set_commentable
   before_action :set_phase, only: [:show, :edit, :update]
 
 
@@ -28,10 +28,7 @@ class PhasesController < ApplicationController
     authorize @phase
 
     if @phase.save
-      #PhaseMailer.with(phase: @phase).send_mail.deliver_now
-      #require 'launchy'
-      #file_path = File.expand_path(Dir["tmp/letter_opener/*/plain.html"].first)
-      #Launchy.open(file_path)
+      PhaseMailer.with(phase: @phase).send_mail.deliver_now
       respond_to do |format|
         format.html {redirect_to lead_phases_path}
         format.js
@@ -77,7 +74,7 @@ class PhasesController < ApplicationController
   end
 
   def phase_params
-    params.require(:phase).permit(:phase_type, :start_date, :due_date, :comments, :creation_date, :completed, :completed_date, :assignee_id, :lead_id)
+    params.require(:phase).permit(:phase_type, :start_date, :due_date, :creation_date, :completed, :completed_date, :assignee_id, :lead_id)
   end
 
 end

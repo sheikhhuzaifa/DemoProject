@@ -6,13 +6,26 @@ Rails.application.routes.draw do
   resources :leads do
     resources :phases
   end
+  resources :phases do
+    resources :comments,module: :phases
+  end
 
-  resources :projects
+  resources :projects do
+    resources :comments ,module: :projects
+
+    end
+  resources :leads do
+    resources :comments,module: :leads
+  end
+
+  resources :projects do
+    member do
+      patch 'assign_manager', to: 'projects#assign_manager'
+    end
+  end
   resources :phases do
     resources :engineers
   end
-
-  get 'assigned', to: 'pages#assigned_lead', as: 'assigned_leads'
   resources :roles, only: [:index] do
     member do
       post :assign_role

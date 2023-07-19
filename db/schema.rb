@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_18_134715) do
+ActiveRecord::Schema.define(version: 2023_07_19_070820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content"
+    t.string "commentable_type"
+    t.bigint "commentable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+  end
 
   create_table "engineers", force: :cascade do |t|
     t.string "email"
@@ -29,7 +38,6 @@ ActiveRecord::Schema.define(version: 2023_07_18_134715) do
     t.string "client_email"
     t.string "client_contact"
     t.string "platform_used"
-    t.text "comments"
     t.string "test_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -40,7 +48,6 @@ ActiveRecord::Schema.define(version: 2023_07_18_134715) do
     t.string "phase_type"
     t.date "start_date"
     t.date "due_date"
-    t.text "comments"
     t.date "creation_date"
     t.boolean "completed"
     t.date "completed_date"

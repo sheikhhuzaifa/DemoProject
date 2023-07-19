@@ -1,40 +1,45 @@
-<h1>Phases</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Phase Type</th>
-      <th>Start Date</th>
-      <th>Due Date</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @phases.each do |phase| %>
+<h1 class="mb-4">Phases</h1>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+
+    <thead>
       <tr>
-        <td><%= phase.phase_type %></td>
-        <td><%= phase.start_date %></td>
-        <td><%= phase.due_date %></td>
-        <td>
-          <div class="button-group">
-            <%= link_to 'Edit', edit_lead_phase_path(phase.lead, phase), remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editPhaseModal' } %>
-            <%= link_to 'Delete', lead_phase_path(phase.lead, phase), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
-
-
-          </div>
-        </td>
+        <th>Phase Type</th>
+        <th>Start Date</th>
+        <th>Due Date</th>
+        <th>Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @phases.each do |phase| %>
 
-<%= button_to 'New Phase', new_lead_phase_path, method: :get, remote: true, class: 'btn btn-primary', data: { toggle: 'modal', target: '#newPhaseModal' } %>
+        <tr>
+          <td><%= phase.phase_type %></td>
+          <td><%= phase.start_date %></td>
+          <td><%= phase.due_date %></td>
+          <td>
+
+            <div class="btn-group">
+              <%= link_to 'Edit', edit_lead_phase_path(phase.lead, phase), remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editPhaseModal' } %>
+              <%= link_to 'Delete', lead_phase_path(phase.lead, phase), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<%= button_to 'New Phase', new_lead_phase_path, method: :get, remote: true, class: 'btn btn-primary mt-4', data: { toggle: 'modal', target: '#newPhaseModal' } %>
 
 
 <div class="modal fade" id="newPhaseModal" tabindex="-1" role="dialog" aria-labelledby="newPhaseModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
+    </div>
   </div>
 </div>
-

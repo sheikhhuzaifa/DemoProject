@@ -6,12 +6,13 @@ class PhasePolicy <ApplicationPolicy
   end
   def  update?
     return true if user.super_admin?
-    user.roles.exists?(name: "Business_Developer")
+    user.roles.exists?(name: "Business_Developer") || user.roles.exists?(name: "Technical_Manager")
   end
   def create?
-    update?
+    return true if user.super_admin?
+    user.roles.exists?(name: "Business_Developer")
   end
   def destroy?
-    update?
+    create?
   end
 end
