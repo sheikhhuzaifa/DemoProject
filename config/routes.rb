@@ -18,7 +18,8 @@ resources :your_controller, only: [] do
   end
 end
 
-  devise_for :users
+  devise_for :users ,:controllers =>
+  { registration: 'users/registration'}
 
   resources :leads do
     resources :phases

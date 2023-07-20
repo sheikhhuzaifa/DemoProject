@@ -23,6 +23,7 @@ class PagesController < ApplicationController
 
   def assigned_phases
     @leads = Lead.all
+
   end
   def extract_subject_from_email(email_content)
     subject_match = /<title>(.*?)<\/title>/i.match(email_content)

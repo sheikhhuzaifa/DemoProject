@@ -1,0 +1,51 @@
+ <nav class="navbar navbar-expand-lg navbar-light" style="background-color:turquoise;">
+  <a class="navbar-brand" href="/leads">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+
+
+      <% if user_signed_in? %>
+
+        <li class="nav-item">
+        <%= link_to "Leads", leads_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+        <%= link_to "emails", emails_path, class: "nav-link" %>
+        </li>
+
+        <li class="nav-item">
+        <%= link_to "Projects", projects_path, class: "nav-link" %>
+        </li>
+        <% if current_user.image.attached? %>
+    <%= image_tag(current_user.image, style: "display:inline-block ;width:50px ;height: 50px;object-filt:cover; border-radius: 50px;") %>
+  <% else %>
+    <i class="material-icons right">account_circle</i>
+  <% end %>
+        <li class="nav-item">
+          <%= link_to "Roles", roles_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+        <%= link_to "assigned_phases", assigned_phases_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link btn btn-primary" %>
+        </li>
+
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "Login", new_user_session_path, class: "nav-link btn btn-primary" %>
+        </li>
+      <% end %>
+
+    </ul>
+
+
+
+
+  </div>
+</nav>
