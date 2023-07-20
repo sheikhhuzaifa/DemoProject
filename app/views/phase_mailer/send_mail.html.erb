@@ -1,2 +1,11 @@
-<h1><%= @phase.phase_type %></h1>
-<h1><%= @phase.creation_date %></h1>
+<h1>Hello <%= User.find(@phase.assignee_id).username %></h1>
+<p>Here are the details of the phase. Please review the information below and decide whether you want to accept the phase or not.</p>
+<p>Phase Type: <%= @phase.id %></p>
+<p>Phase Type: <%= @phase.phase_type %></p>
+<p>Start Date: <%= @phase.start_date %></p>
+<p>Due Date: <%= @phase.due_date %></p>
+<p>Creation Date: <%= @phase.creation_date %></p>
+<p>Completed: <%= @phase.completed %></p>
+<p>Assignee ID: <%= @phase.assignee_id %></p>
+<p>Lead ID: <%= @phase.lead_id %></p>
+

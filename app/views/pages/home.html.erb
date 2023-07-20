@@ -1,27 +1,30 @@
+<!-- app/views/leads/leads_index.html.erb -->
 
-<div class="container">
-  <h3>Phase Details</h3>
-  <table class="table">
-    <thead>
+<h1>Basic Details of Leads</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Lead Creation Date</th>
+      <th>Phase</th>
+      <th>Assigned User</th>
+      <th>Due Date</th>
+      <th>Delivery Date</th>
+      <th>Sale(Project) Date</th>
+      <th>Assigned User(Project)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @leads.each do |lead| %>
       <tr>
-        <th>Project Name</th>
-        <th>Phase Type</th>
-        <th>Add Engineer</th>
+        <td><%= lead.created_at.strftime('%Y-%m-%d') %></td>
+        <td><%= lead.phase.name %></td>
+        <td><%= lead.phase.assigned_user.name %></td>
+        <td><%= lead.phase.due_date.strftime('%Y-%m-%d') %></td>
+        <td><%= lead.phase.delivery_date.strftime('%Y-%m-%d') %></td>
+        <td><%= lead.project_date.strftime('%Y-%m-%d') if lead.project_date %></td>
+        <td><%= lead.project_assigned_user.name if lead.project_assigned_user %></td>
       </tr>
-    </thead>
-    <tbody>
-      <% @leads.each do |lead| %>
-        <% phases = Phase.joins(:lead).where(leads: { id: lead.id }).where(assignee_id: current_user.id) %>
-        <% phases.each do |phase| %>
-          <tr>
-            <td><%= lead.project_name %></td>
-            <td><%= phase.phase_type %></td>
-            <td>
-             <%= link_to 'Add Engineer', phase_engineers_path(phase_id: phase.id),  class: 'btn btn-primary' %>
-            </td>
-          </tr>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+    <% end %>
+  </tbody>
+</table>

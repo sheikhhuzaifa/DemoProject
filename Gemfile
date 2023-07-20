@@ -33,9 +33,9 @@ gem 'kaminari'
 gem 'rolify'
 gem 'pundit'
 gem 'bootstrap', '~> 5.1'
-gem 'jquery-rails'
+# gem 'jquery-rails'
 gem 'launchy'
-
+gem 'rubocop'
 
 
 

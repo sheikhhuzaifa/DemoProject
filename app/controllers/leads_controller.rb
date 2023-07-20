@@ -42,17 +42,28 @@ class LeadsController < ApplicationController
   end
 
   def update
+    @lead = Lead.find(params[:id])
     authorize @lead
-    if @lead.update(lead_params)
-      redirect_to @lead
+
+    if lead_params[:sale].present?
+      if @lead.update(sale: lead_params[:sale])
+         @lead.update(sale_date: Date.current)
+         redirect_to @lead, notice: 'Sale attribute updated successfully.'
+      else
+        render :edit
+      end
     else
-      render :edit
+      if @lead.update(lead_params.except(:sale))
+        redirect_to @lead, notice: 'Lead details updated successfully.'
+      else
+        render :edit
+      end
     end
   end
 
   def destroy
     authorize @lead
-    @lead.destroy ? (redirect_to leads_url, notice: "Lead was successfully destroyed.") : ('asdsadasd')
+    @lead.destroy ? (redirect_to leads_url, notice: 'Lead was successfully destroyed.') : ('Error')
   end
 
   private
@@ -62,6 +73,6 @@ class LeadsController < ApplicationController
   end
 
   def lead_params
-    params.require(:lead).permit(:project_name, :client_name, :client_address, :client_email, :client_contact, :platform_used, :test_type,:bd_id)
+    params.require(:lead).permit(:project_name, :client_name, :client_address, :client_email, :client_contact, :platform_used, :test_type,:bd_id ,:sale ,:sale_date)
   end
 end

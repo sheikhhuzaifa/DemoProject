@@ -1,5 +1,22 @@
 Rails.application.routes.draw do
-  root to: "pages#home"
+  root to: "leads#index"
+  get '/emails', to: 'pages#email'
+  get '/assigned_phases', to: 'pages#assigned_phases'
+
+ resources :pages, only: [] do
+   member do
+      patch 'accept_phase'
+      patch 'decline_phase'
+
+   end
+ end
+
+resources :your_controller, only: [] do
+  member do
+    post 'accept_email'
+    post 'decline_email'
+  end
+end
 
   devise_for :users
 
@@ -26,6 +43,7 @@ Rails.application.routes.draw do
   resources :phases do
     resources :engineers
   end
+
   resources :roles, only: [:index] do
     member do
       post :assign_role

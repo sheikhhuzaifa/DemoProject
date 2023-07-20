@@ -10,6 +10,6 @@ class PhaseMailer < ApplicationMailer
     user = User.find(@phase.assignee_id)
     email = user.email
 
-    mail to: email ,subject: @phase.phase_type
+    mail to: email ,subject: @phase.id
   end
 end

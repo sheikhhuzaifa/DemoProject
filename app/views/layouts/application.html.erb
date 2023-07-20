@@ -13,7 +13,7 @@
 
   <body>
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color:turquoise;">
-  <a class="navbar-brand" href="#">Home</a>
+  <a class="navbar-brand" href="/leads">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -28,12 +28,18 @@
         <%= link_to "Leads", leads_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
+        <%= link_to "emails", emails_path, class: "nav-link" %>
+        </li>
+
+        <li class="nav-item">
         <%= link_to "Projects", projects_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
           <%= link_to "Roles", roles_path, class: "nav-link" %>
         </li>
-
+        <li class="nav-item">
+        <%= link_to "assigned_phases", assigned_phases_path, class: "nav-link" %>
+        </li>
         <li class="nav-item">
           <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link btn btn-primary" %>
         </li>

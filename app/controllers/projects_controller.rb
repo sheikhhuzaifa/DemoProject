@@ -2,9 +2,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   def index
-    @leads = Lead.joins(:phases)
-                 .group('leads.id')
-                 .having('COUNT(phases.id) = SUM(CASE WHEN phases.completed = ? THEN 1 ELSE 0 END)', true)
+    @leads = Lead.where(sale: true)
 
     @leads.each do |lead|
       next if Project.exists?(lead_id: lead.id)
@@ -33,9 +31,13 @@ class ProjectsController < ApplicationController
   def assign_manager
     @project = Project.find(params[:id])
     authorize @project
-    redirect_to root_path, notice: "Assigned Project assigned successfully."
-  end
 
+    if @project.update(assign_manager_params)
+      redirect_to root_path, notice: "Project assigned successfully."
+    else
+      render :edit
+    end
+  end
 
   private
 
@@ -45,5 +47,8 @@ class ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).permit(:project_name, :assigned_manager_id, :lead_id)
+  end
+  def assign_manager_params
+    params.require(:project).permit(:assigned_manager_id)
   end
 end
