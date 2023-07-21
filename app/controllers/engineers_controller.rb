@@ -1,6 +1,6 @@
 class EngineersController < ApplicationController
   before_action :set_phase
-  before_action :set_engineer, only: [:show, :edit, :update]
+  before_action :set_engineer, only: [:show, :edit, :update,:destroy]
 
   def index
     @engineers = @phase.engineers

@@ -17,7 +17,7 @@
         <td>
           <div class="button-group">
             <%= link_to 'Edit', edit_phase_engineer_path(engineer.phase,engineer), remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editEngineerModal' } %>
-            <%= link_to 'Delete', phase_engineer_path(engineer.phase,engineer), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+            <%= button_to 'Delete', phase_engineer_path(engineer.phase,engineer), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
           </div>
         </td>
       </tr>
