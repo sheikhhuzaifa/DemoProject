@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: "leads#index"
+
   get '/emails', to: 'pages#email'
   get '/assigned_phases', to: 'pages#assigned_phases'
 

@@ -42,4 +42,5 @@ class PagesController < ApplicationController
     redirect_to emails_path
   end
 
+
 end
