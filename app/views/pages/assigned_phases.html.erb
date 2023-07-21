@@ -1,0 +1,29 @@
+
+<div class="container">
+  <h3>Phase Details</h3>
+  <table class="table">
+    <thead>
+      <tr>
+
+        <th>Phase Type</th>
+        <th>Start Date</th>
+        <th>Add Engineer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @leads.each do |lead| %>
+        <% phases = Phase.joins(:lead).where(leads: { id: lead.id }).where(assignee_id: current_user.id) %>
+        <% phases.each do |phase| %>
+          <tr>
+            <td><%= phase.start_date %></td>
+            <td><%= phase.phase_type %></td>
+            <td>
+             <%= link_to 'Add Engineer', phase_engineers_path(phase_id: phase.id),  class: 'btn btn-primary' %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

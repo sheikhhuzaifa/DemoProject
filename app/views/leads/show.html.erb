@@ -1,0 +1,16 @@
+<div class="container">
+  <h1 class="mt-4"><%= @lead.project_name %></h1>
+  <p><strong>Client Name:</strong> <%= @lead.client_name %></p>
+  <p><strong>Client Address:</strong> <%= @lead.client_address %></p>
+  <p><strong>Client Email:</strong> <%= @lead.client_email %></p>
+  <p><strong>Client Contact:</strong> <%= @lead.client_contact %></p>
+  <p><strong>Platform Used:</strong> <%= @lead.platform_used %></p>
+  <p><strong>Test Type:</strong> <%= @lead.test_type %></p>
+  <p><strong>Bd ID:</strong> <%= @lead.bd_id %></p>
+  <h2>Comments:</h2>
+  <%= render partial: "comments/comments", locals: { commentable: @lead } %>
+  <%= render partial: "comments/form", locals: { commentable: @lead } %>
+
+  <%= link_to 'Edit', edit_lead_path(@lead), class: 'btn btn-primary' %> |
+  <%= link_to 'Back', leads_path, class: 'btn btn-secondary' %>
+</div>

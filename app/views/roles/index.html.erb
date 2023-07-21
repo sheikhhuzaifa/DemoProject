@@ -1,19 +1,39 @@
 <h1>User Roles</h1>
 
-<% @users.each do |user| %>
-  <h3><%= user.email %></h3>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>User Email</th>
+        <th>Assign Role</th>
+        <th>Roles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.email %></td>
+          <td>
+            <%= form_tag assign_role_role_path(id: user.id), method: :post, class: "mb-3" do %>
+              <div class="form-group mb-0">
+                <%= select_tag :role, options_for_select(['Super_Admin', 'Business_Developer', 'Technical_Manager', 'Engineer'], selected: @selected_role), class: "form-control" %>
+              </div>
+              <%= submit_tag 'Assign', class: "btn btn-primary mt-2" %>
+            <% end %>
+          </td>
+          <td>
+            <% Role.all.each do |role| %>
+              <% if user.has_role?(role.name) %>
+                <div class="d-flex align-items-center mb-2">
+                  <span class="mr-2"><%= role.name %></span>
+                  </div>
+                  <%= button_to 'Remove', remove_role_role_path(user_id: user.id, id: role.id), method: :delete, class: "btn btn-danger btn-sm" %>
 
-  <%= form_tag assign_role_role_path(id: user.id), method: :post do %>
-    <%= select_tag :role, options_for_select(['Super Admin', 'Business Developer (BD)', 'Technical Manager', 'Engineer']) %>
-    <%= submit_tag 'Assign' %>
-  <% end %>
-<% Role.all.each do |role| %>
-  <% if user.has_role?(role.name) %>
-    <%= role.name %> - <%= button_to 'Remove', remove_role_role_path(user_id: user.id, id: role.id), method: :delete %>
-  <% end %>
-<% end %>
-
-
-
-  <hr>
-<% end %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

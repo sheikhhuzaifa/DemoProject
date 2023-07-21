@@ -1,0 +1,35 @@
+
+<h1>Engineers</h1>
+
+<table>
+  <thead>
+    <tr>
+
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @engineers.each do |engineer| %>
+      <tr>
+
+        <td><%= engineer.email %></td>
+        <td>
+          <div class="button-group">
+            <%= link_to 'Edit', edit_phase_engineer_path(engineer.phase,engineer), remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editEngineerModal' } %>
+            <%= button_to 'Delete', phase_engineer_path(engineer.phase,engineer), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Engineer', new_phase_engineer_path, method: :get, remote: true, class: 'btn btn-primary', data: { toggle: 'modal', target: '#newPhaseModal' } %>
+
+<div class="modal fade" id="newEngineerModal" tabindex="-1" role="dialog" aria-labelledby="editnewEngineerModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>

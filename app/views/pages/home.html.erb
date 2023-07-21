@@ -1,6 +1,30 @@
-<% if user_signed_in? %>
-  <%= button_to "Log out", destroy_user_session_path, method: :delete %>
-  <%= current_user.username %>
-<% else %>
-  <%= link_to "Login", new_user_session_path %>
-<% end %>
+<!-- app/views/leads/leads_index.html.erb -->
+
+<h1>Basic Details of Leads</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Lead Creation Date</th>
+      <th>Phase</th>
+      <th>Assigned User</th>
+      <th>Due Date</th>
+      <th>Delivery Date</th>
+      <th>Sale(Project) Date</th>
+      <th>Assigned User(Project)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @leads.each do |lead| %>
+      <tr>
+        <td><%= lead.created_at.strftime('%Y-%m-%d') %></td>
+        <td><%= lead.phase.name %></td>
+        <td><%= lead.phase.assigned_user.name %></td>
+        <td><%= lead.phase.due_date.strftime('%Y-%m-%d') %></td>
+        <td><%= lead.phase.delivery_date.strftime('%Y-%m-%d') %></td>
+        <td><%= lead.project_date.strftime('%Y-%m-%d') if lead.project_date %></td>
+        <td><%= lead.project_assigned_user.name if lead.project_assigned_user %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

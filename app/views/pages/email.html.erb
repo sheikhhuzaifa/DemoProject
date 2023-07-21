@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="text-center mt-4">
+    <h1>Phase Emails</h1>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <% @filtered_emails.each do |email_data| %>
+        <div class="email mt-4 p-3 border rounded">
+          <h2>Subject: <%= email_data[:subject] %></h2>
+          <%= email_data[:content].html_safe %>
+        </div>
+
+
+
+      <ul>
+        <% @phases.each do |phase| %>
+          <% if (phase.id).to_s == email_data[:subject].to_s %>
+          <% if phase.assignee_id %>
+            <li>
+
+              <%= form_for(phase, url: { action: :accept_phase, id: phase.id }, method: :patch, class: 'accept-form' ) do |f| %>
+                <%= f.submit 'Accept', class: 'accept-button' %>
+              <% end %>
+              <%= form_for(phase, url: { action: :decline_phase, id: phase.id }, method: :patch, class: 'decline-form' ) do |f| %>
+                <%= f.submit 'Decline', class: 'decline-button' %>
+              <% end %>
+            </li>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<h1>Projects</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Project Name</th>
+      <th>Edit</th>
+      <th>Select Manager</th>
+      <th>Project Manager</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.project_name %></td>
+        <td>
+          <%= link_to 'Edit', edit_project_path(project), method: :get, remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#newProjectModal' } %>
+</td>
+<td>
+          <%= form_with(model: project, url: assign_manager_project_path(project), remote: true, class: "needs-validation") do |form| %>
+            <div class="form-group">
+              <%= form.label :assigned_manager_id %>
+              <%= form.collection_select :assigned_manager_id, Role.find_by(name: "Technical_Manager").users, :id, :username, prompt: "Select Technical Manager", class: "form-control" %>
+            </div>
+            <%= form.submit "Assign Manager", class: "btn btn-primary ml-2" %>
+          <% end %>
+        </td>
+        <td><%= User.find(project.assigned_manager_id).username %></td>
+      </tr>
+
+    <% end %>
+
+  </tbody>
+
+</table>
+
+<div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    </div>
+  </div>
+</div>

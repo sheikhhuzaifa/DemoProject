@@ -1,0 +1,6 @@
+
+$('#newPhaseModal .modal-content').html("<%= j render 'edit', phase: @phase %>");
+$('#newPhaseModal').modal('show');
+$('.modal-header .close').click(function() {
+     $('.modal').modal('hide');
+});

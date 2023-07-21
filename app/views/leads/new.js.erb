@@ -1,0 +1,6 @@
+
+$('#newLeadModal .modal-content').html("<%= j render 'new', lead: @lead %>");
+$('#newLeadModal').modal('show');
+$('.modal-header .close').click(function() {
+     $('.modal').modal('hide');
+});

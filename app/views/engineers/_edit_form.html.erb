@@ -1,0 +1,10 @@
+<%= form_with(model: @engineer, url: phase_engineer_path(@phase, @engineer), method: :patch, remote: true, class: "needs-validation") do |form| %>
+  <%= form.hidden_field :id %>
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.collection_select :email, User.with_role(:Engineer), :email, :email, { include_blank: true }, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
