@@ -5,7 +5,7 @@ class Lead < ApplicationRecord
   has_many :comments, as: :commentable
 
   has_one :project, dependent: :destroy
-
+  update_index('leads') { self }
 
   scope :sort_by_client, -> { order(:client_name) }
 end

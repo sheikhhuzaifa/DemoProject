@@ -3,7 +3,23 @@ class LeadsController < ApplicationController
 
   def index
     @leads = Lead.sort_by_client
+
+    if params[:query].present?
+      @leads_search = LeadsIndex.query(
+        wildcard: {
+          project_name: {
+            value: "*#{params[:query]}*"
+          }
+        }
+      ).load
+      project_names = @leads_search.map { |result| result.project_name }
+      @leads_with_details = Lead.where(project_name: project_names)
+    else
+
+      @leads_with_details = nil
+    end
   end
+
 
   def show
     respond_to do |format|
@@ -66,6 +82,10 @@ class LeadsController < ApplicationController
     @lead.destroy ? (redirect_to leads_url, notice: 'Lead was successfully destroyed.') : ('Error')
   end
 
+
+
+
+
   private
 
   def set_lead
@@ -75,4 +95,9 @@ class LeadsController < ApplicationController
   def lead_params
     params.require(:lead).permit(:project_name, :client_name, :client_address, :client_email, :client_contact, :platform_used, :test_type,:bd_id ,:sale ,:sale_date)
   end
+
+  def search_params
+   params.permit(:query)
+  end
+
 end

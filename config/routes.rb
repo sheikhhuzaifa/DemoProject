@@ -12,12 +12,7 @@ Rails.application.routes.draw do
    end
  end
 
-resources :your_controller, only: [] do
-  member do
-    post 'accept_email'
-    post 'decline_email'
-  end
-end
+
 
   devise_for :users ,:controllers =>
   { registration: 'users/registration'}
