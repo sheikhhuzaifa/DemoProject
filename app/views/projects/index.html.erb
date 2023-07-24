@@ -57,6 +57,7 @@
     <tr>
       <th>Project Name</th>
       <th>Edit</th>
+      <th>Show</th>
       <th>Select Manager</th>
       <th>Project Manager</th>
     </tr>
@@ -66,7 +67,7 @@
       <tr>
         <td><%= project.project_name %></td>
         <td>
-          <%= link_to 'Edit', edit_project_path(project), method: :get, remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#newProjectModal' } %>
+          <%= link_to 'Edit Project name', edit_project_path(project), method: :get, remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#newProjectModal' } %>
 </td>
 <td>
 <%= link_to 'show',  project_path(project), class: 'btn btn-primary' %>

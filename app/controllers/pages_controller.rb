@@ -43,6 +43,7 @@ class PagesController < ApplicationController
   def decline_phase
     phase = Phase.find(params[:id])
     phase.update(assignee_id: nil)
-    redirect_to emails_path
+    lead = Lead.find(phase.lead_id)
+    redirect_to lead_phase_path(lead_id: lead.id, id: phase.id)
   end
 end
