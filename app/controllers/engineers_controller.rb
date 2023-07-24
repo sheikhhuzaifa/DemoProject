@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class EngineersController < ApplicationController
   before_action :set_phase
-  before_action :set_engineer, only: [:show, :edit, :update,:destroy]
+  before_action :set_engineer, only: %i[show edit update destroy]
 
   def index
     @engineers = @phase.engineers
@@ -11,7 +13,6 @@ class EngineersController < ApplicationController
   end
 
   def create
-
     @engineer = @phase.engineers.new(engineer_params)
     @engineer.phase_id = @phase.id
     if @engineer.save
@@ -21,8 +22,7 @@ class EngineersController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   def edit
     respond_to do |format|
@@ -55,6 +55,6 @@ class EngineersController < ApplicationController
   end
 
   def engineer_params
-    params.require(:engineer).permit(:email ,:phase_id)
+    params.require(:engineer).permit(:email, :phase_id)
   end
 end

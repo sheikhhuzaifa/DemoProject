@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class PagesController < ApplicationController
   def email
-    @phases=Phase.all
+    @phases = Phase.all
     email_directory = Rails.root.join('tmp', 'letter_opener')
     email_files = Dir.glob(email_directory.join('**/rich.html'))
 
@@ -14,7 +16,7 @@ class PagesController < ApplicationController
       file_path = URI.parse(file).path
       file_content = File.read(file_path)
       subject = extract_subject_from_email(file_content)
-      { subject: subject, content: file_content }
+      { subject:, content: file_content }
     end
     @filtered_emails = @emails.select do |email_data|
       @phases.any? { |phase| email_data[:subject].to_s.include?(phase.id.to_s) }
@@ -23,13 +25,14 @@ class PagesController < ApplicationController
 
   def assigned_phases
     @leads = Lead.all
-
   end
+
   def extract_subject_from_email(email_content)
-    subject_match = /<title>(.*?)<\/title>/i.match(email_content)
+    subject_match = %r{<title>(.*?)</title>}i.match(email_content)
     subject = subject_match[1] if subject_match
     subject
   end
+
   def accept_phase
     phase = Phase.find(params[:id])
     phase.update(assignee_id: current_user.id)
@@ -41,6 +44,4 @@ class PagesController < ApplicationController
     phase.update(assignee_id: nil)
     redirect_to emails_path
   end
-
-
 end

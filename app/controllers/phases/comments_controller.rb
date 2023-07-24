@@ -1,9 +1,13 @@
-class Phases::CommentsController < CommentsController
-  before_action :set_commentable
+# frozen_string_literal: true
 
-  private
+module Phases
+  class CommentsController < CommentsController
+    before_action :set_commentable
 
-  def set_commentable
-    @commentable = Phase.find(params[:phase_id])
+    private
+
+    def set_commentable
+      @commentable = Phase.find(params[:phase_id])
+    end
   end
 end

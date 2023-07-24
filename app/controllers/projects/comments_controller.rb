@@ -1,9 +1,13 @@
-class Projects::CommentsController < CommentsController
-  before_action :set_commentable
+# frozen_string_literal: true
 
-  private
+module Projects
+  class CommentsController < CommentsController
+    before_action :set_commentable
 
-  def set_commentable
-    @commentable = Lead.find(params[:project_id])
+    private
+
+    def set_commentable
+      @commentable = Lead.find(params[:project_id])
+    end
   end
 end

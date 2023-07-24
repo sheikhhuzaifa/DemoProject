@@ -136,7 +136,6 @@
     </tbody>
   </table>
 </div>
-
 <%= button_to 'New Lead', new_lead_path, method: :get, remote: true, class: 'btn btn-primary mt-4', data: { toggle: 'modal', target: '#newLeadModal' } %>
 
 
@@ -147,5 +146,7 @@
     </div>
   </div>
 </div>
+
  <% end %>
+ <%= paginate @leads %>
 <div>

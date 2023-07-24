@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Lead < ApplicationRecord
   belongs_to :user, foreign_key: :bd_id
 
