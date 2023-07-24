@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# engineer model
 class EngineersController < ApplicationController
   before_action :set_phase
   before_action :set_engineer, only: %i[show edit update destroy]

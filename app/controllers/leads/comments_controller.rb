@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Leads
+  # leads model
   class CommentsController < CommentsController
     before_action :set_commentable
 

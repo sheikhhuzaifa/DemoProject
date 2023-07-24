@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# page
 class PagesController < ApplicationController
   def email
     @phases = Phase.all

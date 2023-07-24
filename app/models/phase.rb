@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Phase
 class Phase < ApplicationRecord
   belongs_to :lead, foreign_key: :lead_id
 

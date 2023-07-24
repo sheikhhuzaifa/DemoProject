@@ -10,7 +10,5 @@
   <h2>Comments:</h2>
   <%= render partial: "comments/comments", locals: { commentable: @lead } %>
   <%= render partial: "comments/form", locals: { commentable: @lead } %>
-
-  <%= link_to 'Edit', edit_lead_path(@lead), class: 'btn btn-primary' %> |
   <%= link_to 'Back', leads_path, class: 'btn btn-secondary' %>
 </div>
