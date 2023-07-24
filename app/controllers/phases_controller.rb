@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# phase model
 class PhasesController < ApplicationController
   before_action :set_lead
   before_action :set_phase, only: %i[show edit update]

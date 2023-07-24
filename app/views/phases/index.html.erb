@@ -2,6 +2,7 @@
 <%= form_with(url: lead_phases_path, method: :get, class: "form-inline mt-4 mb-4") do |form| %>
   <%= form.text_field :query, class: "form-control mr-sm-2", placeholder: "Search Phase", value: params[:query] %>
   <%= form.submit "Search", class: "btn btn-primary my-2 my-sm-0" %>
+  <%= link_to 'Clear', lead_phases_path(params['lead_id']), class: 'btn btn-primary my-2 my-sm-0' %>
 <% end %>
 <h1 class="mb-4">Phases</h1>
 <% if !@phases_search.nil? %>

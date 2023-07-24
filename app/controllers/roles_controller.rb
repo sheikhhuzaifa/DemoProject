@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# roles model
 class RolesController < ApplicationController
   before_action :authenticate_user!
 
