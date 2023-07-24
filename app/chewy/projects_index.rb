@@ -5,11 +5,11 @@ class ProjectsIndex < Chewy::Index
   settings analysis: {
     analyzer: {
       project_name: {
-        tokenizer: 'keyword',
+        tokenizer: 'ngram',
         filter: ['lowercase']
       },
       assigned_manager_id: {
-        tokenizer: 'keyword',
+        tokenizer: 'ngram',
         filter: ['lowercase']
       }
     }

@@ -3,41 +3,14 @@
   <%= form.text_field :query, class: "form-control mr-sm-2", placeholder: "Search Phase", value: params[:query] %>
   <%= form.submit "Search", class: "btn btn-primary my-2 my-sm-0" %>
   <%= link_to 'Clear', lead_phases_path(params['lead_id']), class: 'btn btn-primary my-2 my-sm-0' %>
+<%= form_tag({ controller: 'phases', action: 'index' }, method: 'get') do %>
+  <%= label_tag 'phases_per_page', 'Number of phases per page:' %>
+  <%= text_field_tag 'phases_per_page', params[:phases_per_page] || 10, type: 'number', min: 1 %>
+  <%= submit_tag 'Update', class: 'btn btn-primary' %>
+<% end %>
+
 <% end %>
 <h1 class="mb-4">Phases</h1>
-<% if !@phases_search.nil? %>
-<div class="table-responsive">
-  <table class="table table-bordered">
-
-    <thead>
-      <tr>
-        <th>Phase Type</th>
-        <th>Start Date</th>
-        <th>Due Date</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @phases_with_details.each do |phase| %>
-
-        <tr>
-          <td><%= phase.phase_type %></td>
-          <td><%= phase.start_date %></td>
-          <td><%= phase.due_date %></td>
-          <td>
-
-            <div class="btn-group">
-              <%= link_to 'Edit', edit_lead_phase_path(phase.lead, phase), remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editPhaseModal' } %>
-              <%= link_to 'show',  lead_phase_path(phase.lead, phase), class: 'btn btn-primary' %>
-              <%= link_to 'Delete', lead_phase_path(phase.lead, phase), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
-            </div>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-<% elsif @phases_with_details.nil? %>
 <div class="table-responsive">
   <table class="table table-bordered">
 
@@ -69,7 +42,7 @@
     </tbody>
   </table>
 </div>
-<% end %>
+
 
 <%= button_to 'New Phase', new_lead_phase_path, method: :get, remote: true, class: 'btn btn-primary mt-4', data: { toggle: 'modal', target: '#newPhaseModal' } %>
 

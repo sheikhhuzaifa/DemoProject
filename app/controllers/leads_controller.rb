@@ -5,48 +5,24 @@ class LeadsController < ApplicationController
   before_action :set_lead, only: %i[show edit update destroy]
 
   def index
-    @leads = Lead.page(params[:page]).per(3)
-
     if params[:query].present?
-      @leads_search = LeadsIndex.query(
-        wildcard: {
-          project_name: {
-            value: "*#{params[:query]}*"
-          }
+      @leads = LeadsIndex.query(
+        query_string: {
+          fields: [:project_name, :client_email, :client_name],
+          query: params[:query],
+          default_operator: 'and'
         }
       ).load
-      project_names = @leads_search.map(&:project_name)
+      project_names = @leads.map(&:project_name)
+      client_email = @leads.map(&:client_email)
+      client_name = @leads.map(&:client_name)
 
-      @clients_email_search = LeadsIndex.query(
-        wildcard: {
-          client_email: {
-
-            value: "*#{params[:query]}*"
-          }
-        }
-      ).load
-      client_email = @clients_email_search.map(&:client_email)
-      @clients_name_search = LeadsIndex.query(
-        wildcard: {
-          client_name: {
-            value: "*#{params[:query]}*"
-          }
-        }
-      ).load
-      client_name = @clients_name_search.map(&:client_name)
-      @sale_search = LeadsIndex.query(
-        wildcard: {
-          sale: {
-            value: "*#{params[:query]}*"
-          }
-        }
-      ).load
-      sale = @sale_search.map(&:sale)
-      matching_leads = Lead.where('project_name IN (?) OR client_email IN (?) OR client_name IN (?) OR sale IN (?)', project_names,
-                                  client_email, client_name, sale)
-      @leads_with_details = matching_leads.page(params[:page]).per(3)
+      @leads = Lead.where('project_name IN (?) OR client_email IN (?) OR client_name IN (?)', project_names, client_email, client_name)
+      per_page = params[:leads_per_page] || 10
+      @leads = @leads.page(params[:page]).per(per_page)
     else
-      @leads_with_details = nil
+      per_page = params[:leads_per_page] || 10
+      @leads = Lead.page(params[:page]).per(per_page)
     end
   end
 

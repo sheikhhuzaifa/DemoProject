@@ -7,22 +7,24 @@ class PhasesController < ApplicationController
 
   def index
     # @phases = @lead.phases
-    @phases = @lead.phases.page(params[:page]).per(3)
 
     if params[:query].present?
-
-      @phases_search = PhasesIndex.query(
-        wildcard: {
-          phase_type: {
-            value: "*#{params[:query]}*"
-          }
+      phases_search = PhasesIndex.query(
+        query_string: {
+          fields: [:phase_type],
+          query: params[:query],
+          default_operator: 'AND'
         }
       ).load
-      phase_type = @phases_search.map(&:phase_type)
-      @phases_with_details = @lead.phases.where(phase_type:)
-      @phases_with_details = @phases_with_details.page(params[:page]).per(3)
+
+      phase_type = phases_search.map(&:phase_type)
+      @phases = @lead.phases.where(phase_type: phase_type)
+      per_page = (params[:phases_per_page] || 10).to_i
+      @phases = @phases.page(params[:page]).per(per_page)
+
     else
-      @phases_with_details = nil
+      per_page = (params[:phases_per_page] || 10).to_i
+      @phases = Phase.page(params[:page]).per(per_page)
     end
   end
 

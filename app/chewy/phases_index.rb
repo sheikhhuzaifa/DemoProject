@@ -5,7 +5,7 @@ class PhasesIndex < Chewy::Index
   settings analysis: {
     analyzer: {
       phase_type: {
-        tokenizer: 'keyword',
+        tokenizer: 'ngram',
         filter: ['lowercase']
       }
     }

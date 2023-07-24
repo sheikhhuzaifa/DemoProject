@@ -14,24 +14,22 @@ class ProjectsController < ApplicationController
       @project.save
     end
 
-    @projects = Project.page(params[:page]).per(2)
+
     if params[:query].present?
-      @projects_search = ProjectsIndex.query(
-        wildcard: {
-          project_name: {
-            value: "*#{params[:query]}*"
-          }
+      project_names = ProjectsIndex.query(
+        query_string: {
+          fields: [:project_name],
+          query: params[:query],
+          default_operator: 'AND'
         }
-      ).load
-      project_names = @projects_search.map(&:project_name)
-      @manager_search = User.where('username LIKE ?', "%#{params[:query]}%")
-      manager_ids = @manager_search.pluck(:id)
-      @manager_search.pluck(:id, :username).to_h
-      matching_projects = Project.where('project_name IN (?) OR assigned_manager_id IN (?)', project_names, manager_ids)
-      @projects_with_details = matching_projects.page(params[:page]).per(2)
+      ).load.map(&:project_name)
+      manager_ids = User.where('username LIKE ?', "%#{params[:query]}%").pluck(:id)
+      @projects = Project.where('project_name IN (?) OR assigned_manager_id IN (?)', project_names, manager_ids)
+      per_page = (params[:projects_per_page] || 10).to_i
+      @projects = @projects.page(params[:page]).per(per_page)
     else
 
-      @projects_with_details = nil
+      @projects = Project.page(params[:page]).per(10)
     end
   end
 

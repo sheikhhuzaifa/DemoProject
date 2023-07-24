@@ -5,19 +5,19 @@ class LeadsIndex < Chewy::Index
   settings analysis: {
     analyzer: {
       project_name: {
-        tokenizer: 'keyword',
+        tokenizer: 'ngram',
         filter: ['lowercase']
       },
       client_email: {
-        tokenizer: 'keyword',
+        tokenizer: 'ngram',
         filter: ['lowercase']
       },
       client_name: {
-        tokenizer: 'standard',
+        tokenizer: 'ngram',
         filter: ['lowercase']
       },
       sale: {
-        tokenizer: 'keyword',
+        tokenizer: 'ngram',
         filter: ['lowercase']
       }
     }
