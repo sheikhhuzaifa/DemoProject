@@ -14,23 +14,20 @@ class ProjectsController < ApplicationController
       @project.save
     end
 
-
+    @projects = Project.all
     if params[:query].present?
-      project_names = ProjectsIndex.query(
+      @projects = Project.where(id: ProjectsIndex.query(
         query_string: {
           fields: [:project_name],
           query: params[:query],
           default_operator: 'AND'
         }
-      ).load.map(&:project_name)
-      manager_ids = User.where('username LIKE ?', "%#{params[:query]}%").pluck(:id)
-      @projects = Project.where('project_name IN (?) OR assigned_manager_id IN (?)', project_names, manager_ids)
-      per_page = (params[:projects_per_page] || 10).to_i
-      @projects = @projects.page(params[:page]).per(per_page)
-    else
-
-      @projects = Project.page(params[:page]).per(10)
+      ).load.map(&:id)).or(Project.where(assigned_manager_id:
+        User.where('username LIKE ?', "%#{params[:query]}%")
+        .pluck(:id)))
     end
+    per_page = (params[:projects_per_page] || 10)
+    @projects = @projects.page(params[:page]).per(per_page)
   end
 
   def show; end

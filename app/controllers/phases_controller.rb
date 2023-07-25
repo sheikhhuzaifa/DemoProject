@@ -6,26 +6,19 @@ class PhasesController < ApplicationController
   before_action :set_phase, only: %i[show edit update]
 
   def index
-    # @phases = @lead.phases
+    @phases = @lead.phases
 
     if params[:query].present?
-      phases_search = PhasesIndex.query(
+      @phases = @lead.phases.where(id: PhasesIndex.query(
         query_string: {
-          fields: [:phase_type],
-          query: params[:query],
-          default_operator: 'AND'
+          fields: %w[phase_type completed],
+          query: params[:query], default_operator: 'AND'
         }
-      ).load
-
-      phase_type = phases_search.map(&:phase_type)
-      @phases = @lead.phases.where(phase_type: phase_type)
-      per_page = (params[:phases_per_page] || 10).to_i
-      @phases = @phases.page(params[:page]).per(per_page)
-
-    else
-      per_page = (params[:phases_per_page] || 10).to_i
-      @phases = Phase.page(params[:page]).per(per_page)
+      ).load.map(&:id))
     end
+
+    per_page = (params[:phases_per_page] || 20)
+    @phases = @phases.page(params[:page]).per(per_page)
   end
 
   def new

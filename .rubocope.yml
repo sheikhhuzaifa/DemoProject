@@ -75,6 +75,8 @@ Lint/UselessRuby2Keywords: # new in 1.23
   Enabled: true
 Metrics/CollectionLiteralLength: # new in 1.47
   Enabled: true
+Metrics/MethodLength:
+  Enabled: false
 Naming/BlockForwarding: # new in 1.24
   Enabled: true
 Security/CompoundHash: # new in 1.28

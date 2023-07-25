@@ -19,6 +19,14 @@ class LeadsIndex < Chewy::Index
       sale: {
         tokenizer: 'ngram',
         filter: ['lowercase']
+      },
+      client_contact: {
+        tokenizer: 'ngram',
+        filter: ['lowercase']
+      },
+      sale_date: {
+        tokenizer: 'ngram',
+        filter: ['lowercase']
       }
     }
   }
@@ -28,4 +36,6 @@ class LeadsIndex < Chewy::Index
   field :client_email, analyzer: 'client_email'
   field :client_name, analyzer: 'client_name'
   field :sale, analyzer: 'sale'
+  field :client_contact, analyzer: 'client_contact'
+  field :sale_date, analyzer: 'sale_date'
 end

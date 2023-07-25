@@ -1,79 +1,78 @@
 <div class="container mt-4">
-<%= form_with(url: leads_path, method: :get, class: "form-inline mt-4 mb-4") do |form| %>
-  <%= form.text_field :query, class: "form-control mr-sm-2", placeholder: "Search Leads", value: params[:query] %>
-  <%= form.submit "Search", class: "btn btn-primary my-2 my-sm-0" %>
-  <%= link_to 'Clear', leads_path, class: 'btn btn-primary my-2 my-sm-0' %>
-  <%= form_tag({ controller: 'leads', action: 'index' }, method: 'get') do %>
-  <%= label_tag 'leads_per_page', 'Number of leads per page:' %>
-  <%= text_field_tag 'leads_per_page', params[:leads_per_page] || 10, type: 'number', min: 1 %>
-  <%= submit_tag 'Update', class: 'btn btn-primary' %>
-<% end %>
-<% end %>
-
-<h1 class="mb-4">Leads</h1>
-  <div class="table-responsive">
-  <table class="table table-bordered">
-
-    <thead>
-      <tr>
-        <th>Project Name</th>
-        <th>Client Name</th>
-        <th>Creation Date</th>
-        <th>Client Email</th>
-        <th>Sale</th>
-        <th>Sale Date OR action</th>
-
-      </tr>
-    </thead>
-    <tbody>
-      <% @leads.each do |lead| %>
-
-        <tr>
-          <td><%= lead.project_name %></td>
-          <td><%= lead.client_name %></td>
-          <td><%= lead.created_at %></td>
-          <td><%= lead.client_email %></td>
-
-          <% if lead.sale %>
-          <td>Lead Convert into Sale</td>
-          <% elsif %>
-          <td>
-            <% if lead.phases.all?(&:completed) %>
-              <%= form_with(model: lead, local: true) do |form| %>
-  <%= form.check_box :sale %>
-  <% if lead.sale? %>
-    <%= form.hidden_field :sale_date, value: Date.current %>
-  <% else %>
-    <%= form.hidden_field :sale_date, value: nil %>
+  <%= form_with(url: leads_path, method: :get, class: "form-inline mt-4 mb-4") do |form| %>
+    <%= form.text_field :query, class: "form-control mr-sm-2", placeholder: "Search Leads", value: params[:query] %>
+    <%= form.submit "Search", class: "btn btn-primary my-2 my-sm-0" %>
+    <%= link_to 'Clear', leads_path, class: 'btn btn-primary my-2 my-sm-0' %>
+    <%= form_tag({ controller: 'leads', action: 'index' }, method: 'get') do %>
+      <%= label_tag 'leads_per_page', 'Number of leads per page:' %>
+      <%= text_field_tag 'leads_per_page', params[:leads_per_page] || 10, type: 'number', min: 1 %>
+      <%= submit_tag 'Update', class: 'btn btn-primary' %>
+    <% end %>
   <% end %>
-  <%= form.submit 'Update Sale status' %>
-<% end %>
 
-            <% else %>
+  <h1 class="mb-4">Leads</h1>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Project Name</th>
+          <th>Client Name</th>
+          <th>Client Contact</th>
+          <th>Client Email</th>
+          <th>Sale</th>
+          <th>action</th>
+          <th>Sale Date</th>
+        </tr>
 
-              <%= lead.sale %>
-            <% end %>
-          </td>
+      </thead>
+      <tbody>
+        <% @leads.each do |lead| %>
+          <tr>
+            <td><%= lead.project_name %></td>
+            <td><%= lead.client_name %></td>
+            <td><%= lead.client_contact %></td>
+            <td><%= lead.client_email %></td>
 
-          <td>
-
-            <div class="btn-group">
-              <%= link_to 'Edit', edit_lead_path(lead), method: :get, remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editLeadModal' } %>
-              <%= link_to 'Delete', lead, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
-              <%= link_to 'Show', lead_path(lead), method: :get, class: 'btn btn-danger'%>
-              <%= link_to 'Add Phases', lead_phases_path(lead_id: lead.id), class: 'btn btn-primary' %>
-            </div>
-          </td>
+  <% if lead.sale %>
+    <td>Lead Convert into Sale</td>
+  <% else %>
+    <td>
+      <% if lead.phases.all?(&:completed) %>
+        <%= form_with(model: lead, local: true) do |form| %>
+          <%= form.check_box :sale %>
+          <% if lead.sale? %>
+            <%= form.hidden_field :sale_date, value: Date.current %>
+          <% else %>
+            <%= form.hidden_field :sale_date, value: nil %>
           <% end %>
-           <% if lead.sale %>
-          <td>Completed: <%= lead.sale_date %></td>
-          <% end %>
-       </tr>
+          <%= form.submit 'Update Sale status' %>
+        <% end %>
+      <% else %>
+        <%= lead.sale %>
       <% end %>
+    </td>
+  <% end %>
 
 
-    </tbody>
-  </table>
-  <%= paginate @leads %>
+            <td>
+
+                <div class="btn-group">
+                  <%= link_to 'Edit', edit_lead_path(lead), method: :get, remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editLeadModal' } %>
+                  <%= link_to 'Delete', lead, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'Show', lead_path(lead), method: :get, class: 'btn btn-danger' %>
+                  <%= link_to 'Add Phases', lead_phases_path(lead_id: lead.id), class: 'btn btn-primary' %>
+                </div>
+              <% if lead.sale %>
+                <td>Completed: <%= lead.sale_date %></td>
+              <% else %>
+                <td>Not Completed</td>
+              <% end %>
+
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @leads %>
+  </div>
 </div>
-  </dl>

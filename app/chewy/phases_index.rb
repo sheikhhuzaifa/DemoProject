@@ -7,10 +7,14 @@ class PhasesIndex < Chewy::Index
       phase_type: {
         tokenizer: 'ngram',
         filter: ['lowercase']
+      },
+      completed: {
+        tokenizer: 'ngram',
+        filter: ['lowercase']
       }
     }
   }
-
   index_scope Phase
   field :phase_type, analyzer: 'phase_type'
+  field :completed, analyzer:  'completed'
 end

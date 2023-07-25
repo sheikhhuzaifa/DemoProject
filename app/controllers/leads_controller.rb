@@ -5,25 +5,17 @@ class LeadsController < ApplicationController
   before_action :set_lead, only: %i[show edit update destroy]
 
   def index
+    @leads = Lead.all
     if params[:query].present?
-      @leads = LeadsIndex.query(
+      @leads = Lead.where(id: LeadsIndex.query(
         query_string: {
-          fields: [:project_name, :client_email, :client_name],
-          query: params[:query],
-          default_operator: 'and'
+          fields: %i[project_name client_email client_name client_contact],
+          query: params[:query], default_operator: 'and'
         }
-      ).load
-      project_names = @leads.map(&:project_name)
-      client_email = @leads.map(&:client_email)
-      client_name = @leads.map(&:client_name)
-
-      @leads = Lead.where('project_name IN (?) OR client_email IN (?) OR client_name IN (?)', project_names, client_email, client_name)
-      per_page = params[:leads_per_page] || 10
-      @leads = @leads.page(params[:page]).per(per_page)
-    else
-      per_page = params[:leads_per_page] || 10
-      @leads = Lead.page(params[:page]).per(per_page)
+      ).load.map(&:id))
     end
+    per_page = params[:leads_per_page] || 20
+    @leads = @leads.page(params[:page]).per(per_page)
   end
 
   def show
@@ -79,8 +71,10 @@ class LeadsController < ApplicationController
   end
 
   def destroy
+    @lead = Lead.find(params[:id])
     authorize @lead
-    @lead.destroy ? (redirect_to leads_url, notice: 'Lead was successfully destroyed.') : 'Error'
+    @lead.destroy
+    redirect_to leads_path
   end
 
   private
