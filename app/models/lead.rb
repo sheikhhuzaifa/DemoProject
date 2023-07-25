@@ -2,6 +2,7 @@
 
 # Lead
 class Lead < ApplicationRecord
+
   validates :client_contact, presence: true, numericality: { only_integer: true, message: 'must be an integer' }
 
   belongs_to :user, foreign_key: :bd_id

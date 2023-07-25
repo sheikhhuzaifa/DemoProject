@@ -1,15 +1,5 @@
 <div class="container mt-4">
-  <%= form_with(url: leads_path, method: :get, class: "form-inline mt-4 mb-4") do |form| %>
-    <%= form.text_field :query, class: "form-control mr-sm-2", placeholder: "Search Leads", value: params[:query] %>
-    <%= form.submit "Search", class: "btn btn-primary my-2 my-sm-0" %>
-    <%= link_to 'Clear', leads_path, class: 'btn btn-primary my-2 my-sm-0' %>
-    <%= form_tag({ controller: 'leads', action: 'index' }, method: 'get') do %>
-      <%= label_tag 'leads_per_page', 'Number of leads per page:' %>
-      <%= text_field_tag 'leads_per_page', params[:leads_per_page] || 10, type: 'number', min: 1 %>
-      <%= submit_tag 'Update', class: 'btn btn-primary' %>
-    <% end %>
-  <% end %>
-
+<%= render 'search_form' %>
   <h1 class="mb-4">Leads</h1>
   <div class="table-responsive">
     <table class="table table-bordered">
@@ -75,4 +65,14 @@
     </table>
     <%= paginate @leads %>
   </div>
+  <%= button_to 'New Lead', new_lead_path, method: :get, remote: true, class: 'btn btn-primary mt-4', data: { toggle: 'modal', target: '#newLeadModal' } %>
+
+
+<div class="modal fade" id="newLeadModal" tabindex="-1" role="dialog" aria-labelledby="newLeadModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    </div>
+  </div>
+</div>
 </div>

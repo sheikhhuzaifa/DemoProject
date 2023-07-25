@@ -25,7 +25,13 @@ class PagesController < ApplicationController
   end
 
   def assigned_phases
+
     @leads = Lead.all
+    current_user_id = current_user.id
+    @assigned_phases = Phase.joins(:lead).where(leads: { id: @leads.ids }, assignee_id: current_user_id)
+    @q = @assigned_phases.ransack(params[:q])
+    per_page = params[:assign_per_page] || 20
+    @phases = @q.result.page(params[:assign_per_page]).per(per_page)
   end
 
   def extract_subject_from_email(email_content)

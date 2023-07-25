@@ -1,14 +1,5 @@
 <div class="container mt-4">
-<%= form_with(url: projects_path, method: :get, class: "form-inline mt-4 mb-4") do |form| %>
-  <%= form.text_field :query, class: "form-control mr-sm-2", placeholder: "Search Project", value: params[:query] %>
-  <%= form.submit "Search", class: "btn btn-primary my-2 my-sm-0" %>
-  <%= link_to 'Clear', projects_path, class: 'btn btn-primary my-2 my-sm-0' %>
-  <%= form_tag({ controller: 'projects', action: 'index' }, method: 'get') do %>
-  <%= label_tag 'projects_per_page', 'Number of projects per page:' %>
-  <%= text_field_tag 'projects_per_page', params[:projects_per_page] || 10, type: 'number', min: 1 %>
-  <%= submit_tag 'Update', class: 'btn btn-primary' %>
-<% end %>
-<% end %>
+<%= render 'search_form' %>
 <h1>Projects</h1>
 <table class="table table-striped">
   <thead>

@@ -1,0 +1,19 @@
+<div style="display: flex; align-items: flex-start;">
+  <%= search_form_for @q, url: :assigned_phases, html: { style: "display: flex;" } do |f| %>
+    <div class="form-group mb-0">
+      <%= f.label :phase_type_cont, "Enter Phase Type" %>
+      <%= f.search_field :phase_type_cont, class: "form-control form-control-sm mr-2", style: "height: 30px;" %>
+    </div>
+    <%= f.submit "Search", class: "btn btn-primary btn-sm" , style: "height: 30px; margin-left: 5px; margin-top: 25px;" %>
+  <% end %>
+</div>
+ <div style="display: flex; justify-content: flex-end; margin-top: -35px;">
+  <%= form_tag({ controller: 'pages', action: 'assigned_phases' }, method: 'get', style: "display: flex;") do %>
+   <%= label_tag 'assign_per_page', 'PAGE:',  style: "margin-top: 5px;" %>
+    <%= text_field_tag 'assign_per_page', params[:assign_per_page] || 10, type: 'number', min: 1, class: "form-control mr-2", style: "width: 60px;" %>
+    <button type="submit" class="btn btn-primary"><i class="fas fa-sync"></i></button>
+  <% end %>
+</div>
+
+
+
