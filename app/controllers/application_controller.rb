@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# application
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -21,6 +20,6 @@ class ApplicationController < ActionController::Base
   end
 
   def handle_not_authorized(_exception)
-    redirect_to root_path, alert: 'You are not authorized to perform this action.'
+    redirect_to root_path, alert: "You are not authorized to perform this action."
   end
 end

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# engineer model
 class EngineersController < ApplicationController
   before_action :set_phase
   before_action :set_engineer, only: %i[show edit update destroy]
@@ -17,7 +16,7 @@ class EngineersController < ApplicationController
     @engineer = @phase.engineers.new(engineer_params)
     @engineer.phase_id = @phase.id
     if @engineer.save
-      redirect_to phase_engineers_path, notice: 'Engineer created successfully.'
+      redirect_to phase_engineers_path, notice: "Engineer created successfully."
     else
       render :new
     end
@@ -34,7 +33,7 @@ class EngineersController < ApplicationController
 
   def update
     if @engineer.update(engineer_params)
-      redirect_to phase_engineers_path(@phase), notice: 'Engineer updated successfully.'
+      redirect_to phase_engineers_path(@phase), notice: "Engineer updated successfully."
     else
       render :edit
     end
@@ -42,7 +41,7 @@ class EngineersController < ApplicationController
 
   def destroy
     @engineer.destroy
-    redirect_to phase_engineers_path(@phase), notice: 'Engineer deleted successfully.'
+    redirect_to phase_engineers_path(@phase), notice: "Engineer deleted successfully."
   end
 
   private

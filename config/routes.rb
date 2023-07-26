@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: 'leads#index'
+  root to: "leads#index"
 
-  get '/emails', to: 'pages#email'
-  get '/assigned_phases', to: 'pages#assigned_phases'
+  get "/emails", to: "pages#email"
+  get "/assigned_phases", to: "pages#assigned_phases"
 
   resources :pages, only: [] do
     member do
-      patch 'accept_phase'
-      patch 'decline_phase'
+      patch "accept_phase"
+      patch "decline_phase"
     end
   end
 
-  devise_for :users, controllers: { registration: 'users/registration' }
+  devise_for :users, controllers: { registration: "users/registration" }
 
   resources :leads do
     resources :phases
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     member do
-      patch 'assign_manager', to: 'projects#assign_manager'
+      patch "assign_manager", to: "projects#assign_manager"
     end
   end
   resources :phases do

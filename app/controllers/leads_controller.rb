@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# lead
 class LeadsController < ApplicationController
   before_action :set_lead, only: %i[show edit update destroy]
 
@@ -10,7 +9,7 @@ class LeadsController < ApplicationController
       @leads = Lead.where(id: LeadsIndex.query(
         query_string: {
           fields: %i[project_name client_email client_name client_contact],
-          query: params[:query], default_operator: 'and'
+          query: params[:query], default_operator: "and"
         }
       ).load.map(&:id))
     end
@@ -59,12 +58,12 @@ class LeadsController < ApplicationController
     if lead_params[:sale].present?
       if @lead.update(sale: lead_params[:sale])
         @lead.update(sale_date: Date.current)
-        redirect_to @lead, notice: 'Sale attribute updated successfully.'
+        redirect_to @lead, notice: "Sale attribute updated successfully."
       else
         render :edit
       end
     elsif @lead.update(lead_params.except(:sale))
-      redirect_to @lead, notice: 'Lead details updated successfully.'
+      redirect_to @lead, notice: "Lead details updated successfully."
     else
       render :edit
     end

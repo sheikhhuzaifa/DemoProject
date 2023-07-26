@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# page
 class PagesController < ApplicationController
   def email
     @phases = Phase.all
-    email_directory = Rails.root.join('tmp', 'letter_opener')
-    email_files = Dir.glob(email_directory.join('**/rich.html'))
+    email_directory = Rails.root.join("tmp", "letter_opener")
+    email_files = Dir.glob(email_directory.join("**/rich.html"))
 
     user_emails = email_files.select do |file|
       file_path = URI.parse(file).path
@@ -25,7 +24,6 @@ class PagesController < ApplicationController
   end
 
   def assigned_phases
-
     @leads = Lead.all
     current_user_id = current_user.id
     @assigned_phases = Phase.joins(:lead).where(leads: { id: @leads.ids }, assignee_id: current_user_id)

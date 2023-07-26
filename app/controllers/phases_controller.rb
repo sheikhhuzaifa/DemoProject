@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# phase model
 class PhasesController < ApplicationController
   before_action :set_lead
   before_action :set_phase, only: %i[show edit update]
@@ -12,7 +11,7 @@ class PhasesController < ApplicationController
       @phases = @lead.phases.where(id: PhasesIndex.query(
         query_string: {
           fields: %w[phase_type completed],
-          query: params[:query], default_operator: 'AND'
+          query: params[:query], default_operator: "AND"
         }
       ).load.map(&:id))
     end

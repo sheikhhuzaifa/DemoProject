@@ -11,6 +11,7 @@ class ProjectPolicy < ApplicationPolicy
   def assign_manager?
     return true if user.super_admin?
 
-    user.roles.exists?(name: 'Business_Developer')
+    # user.roles.map(&:name).include?("Business_Developer") this query is more costly as compared to below line
+    user.roles.exists?(name: "Business_Developer")
   end
 end

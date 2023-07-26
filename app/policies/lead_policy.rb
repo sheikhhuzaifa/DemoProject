@@ -11,7 +11,7 @@ class LeadPolicy < ApplicationPolicy
   def update?
     return true if user.super_admin?
 
-    user.roles.exists?(name: 'Business_Developer')
+    user.roles.exists?(name: "Business_Developer")
   end
 
   def create?

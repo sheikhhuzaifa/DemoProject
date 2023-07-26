@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# project model
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[show edit update destroy]
 
@@ -20,23 +19,19 @@ class ProjectsController < ApplicationController
         query_string: {
           fields: [:project_name],
           query: params[:query],
-          default_operator: 'AND'
+          default_operator: "AND"
         }
       ).load.map(&:id)).or(Project.where(assigned_manager_id:
-        User.where('username LIKE ?', "%#{params[:query]}%")
+        User.where("username LIKE ?", "%#{params[:query]}%")
         .pluck(:id)))
     end
     per_page = (params[:projects_per_page] || 10)
     @projects = @projects.page(params[:page]).per(per_page)
   end
 
-  def show; end
-
-  def edit; end
-
   def update
     if @project.update(project_params)
-      redirect_to projects_path, notice: 'Project updated successfully.'
+      redirect_to projects_path, notice: "Project updated successfully."
     else
       render :edit
     end
@@ -47,7 +42,7 @@ class ProjectsController < ApplicationController
     authorize @project
 
     if @project.update(assign_manager_params)
-      redirect_to root_path, notice: 'Project assigned successfully.'
+      redirect_to root_path, notice: "Project assigned successfully."
     else
       render :edit
     end
