@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.new(comment_params)
     authorize @comment
     @comment.save
+
     redirect_to root_path, notice: "Your Comment was successfully posted"
   end
 

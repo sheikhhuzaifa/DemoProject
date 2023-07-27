@@ -1,0 +1,12 @@
+:concurrency: 5
+:queues:
+  - default
+
+:scheduler:
+ :schedule:
+  reset_elasticsearch_indexes_job:
+    cron: '0 0 * * *'
+    class: 'ResetElasticsearchIndexesJob'
+  mail_admin:
+    cron: '*/1 * * * *'
+    class: 'MailAdmin'

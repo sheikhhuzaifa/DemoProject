@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+</head>
+<body>
+<div class="container py-5">
+    <h1 class="display-4"><%= @subject %></h1>
+
+    <p>Dear Admin,</p>
+
+    <p>Please find below the details of the leads created in <%= @month %>:</p>
+
+    <% if @new_leads.present? %>
+      <div class="mb-4">
+        <h2 class="text-primary">New Leads:</h2>
+        <ul class="list-group">
+          <% @new_leads.each do |lead| %>
+            <li class="list-group-item">
+              <strong><%= lead.project_name %></strong> (Created at: <%= lead.created_at.strftime('%Y-%m-%d') %>)
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <p>No new leads were created in <%= @month %>.</p>
+    <% end %>
+
+    <% if @sales_leads.present? %>
+      <div class="mb-4">
+        <h2 class="text-success">Leads Marked as Sales:</h2>
+        <ul class="list-group">
+          <% @sales_leads.each do |lead| %>
+            <li class="list-group-item">
+              <strong><%= lead.project_name %></strong> (Updated at: <%= lead.updated_at.strftime('%Y-%m-%d') %>)
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <p>No leads were marked as sales in <%= @month %>.</p>
+    <% end %>
+
+    <p>Thank you for your attention.</p>
+  </div>
+</body>
+</html>
