@@ -55,19 +55,19 @@ class LeadsController < ApplicationController
     @lead = Lead.find(params[:id])
     authorize @lead
 
-    if lead_params[:sale].present?
-      if @lead.update(sale: lead_params[:sale])
+    if @lead.update(sale_params)
+      if lead_params[:sale].present?
         @lead.update(sale_date: Date.current)
-        redirect_to @lead, notice: "Sale attribute updated successfully."
+        redirect_to @lead, notice: 'Sale attribute updated successfully.'
       else
-        render :edit
+        redirect_to @lead, notice: 'Lead details updated successfully.'
       end
-    elsif @lead.update(lead_params.except(:sale))
-      redirect_to @lead, notice: "Lead details updated successfully."
     else
       render :edit
     end
   end
+
+
 
   def destroy
     @lead = Lead.find(params[:id])
@@ -86,7 +86,6 @@ class LeadsController < ApplicationController
     params.require(:lead).permit(:project_name, :client_name, :client_address, :client_email, :client_contact,
                                  :platform_used, :test_type, :bd_id, :sale, :sale_date)
   end
-
   def search_params
     params.permit(:query)
   end
