@@ -12,4 +12,5 @@ class Lead < ApplicationRecord
   has_one :project, dependent: :destroy
 
   scope :sort_by_client, -> { order(:client_name) }
+
 end

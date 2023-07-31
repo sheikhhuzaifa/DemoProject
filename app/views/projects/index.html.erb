@@ -1,33 +1,34 @@
 <div class="container mt-4">
-<%= render 'search_form' %>
- <div class="container">
-  <div class="row">
-    <div class="col-12 text-center">
-      <h1 class="mb-4">Projects</h1>
+  <%= render 'search_form' %>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="mb-4">Projects</h1>
+      </div>
     </div>
   </div>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Project Name</th>
-      <th>Edit</th>
-       <th>Show</th>
-      <th>Select Manager</th>
-      <th>Project Manager</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @projects.each do |project| %>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= project.project_name %></td>
-        <td>
+        <th>Project Name</th>
+        <th>Edit</th>
+        <th>Show</th>
+        <th>Select Manager</th>
+        <th>Project Manager</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each do |project| %>
+      <% presenter = ProjectPresenter.new(project) %>
+        <tr>
+          <td><%= presenter.project_name %></td>
+          <td>
           <%= link_to 'Edit', edit_project_path(project), method: :get, remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#newProjectModal' } %>
 </td>
 <td>
 <%= link_to 'show',  project_path(project), class: 'btn btn-primary' %>
 </td>
-<td>
+          <td>
           <%= form_with(model: project, url: assign_manager_project_path(project), remote: true, class: "needs-validation") do |form| %>
             <div class="form-group">
               <%= form.label :assigned_manager_id %>
@@ -36,21 +37,17 @@
             <%= form.submit "Assign Manager", class: "btn btn-primary ml-2" %>
           <% end %>
         </td>
-        <td><%= User.find(project.assigned_manager_id).username %></td>
-      </tr>
+            <td><%= User.find(project.assigned_manager_id).username %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
 
-    <% end %>
-
-  </tbody>
-
-</table>
-
-<div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
+      </div>
     </div>
   </div>
-</div>
-<%= paginate @projects %>
+  <%= paginate @projects %>
 </div>

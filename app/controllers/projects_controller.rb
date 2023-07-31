@@ -4,14 +4,6 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: %i[show edit update destroy]
 
   def index
-    @leads = Lead.where(sale: true)
-
-    @leads.each do |lead|
-      next if Project.exists?(lead_id: lead.id)
-
-      @project = Project.new(project_name: lead.project_name, assigned_manager_id: current_user.id, lead_id: lead.id)
-      @project.save
-    end
 
     @projects = Project.all
     if params[:query].present?
@@ -19,7 +11,7 @@ class ProjectsController < ApplicationController
         query_string: {
           fields: [:project_name],
           query: params[:query],
-          default_operator: "AND"
+          default_operator: "and"
         }
       ).load.map(&:id)).or(Project.where(assigned_manager_id:
         User.where("username LIKE ?", "%#{params[:query]}%")
@@ -51,7 +43,12 @@ class ProjectsController < ApplicationController
   private
 
   def set_project
-    @project = Project.find(params[:id])
+    begin
+      @project = Project.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "Project not found."
+      redirect_to projects_path
+    end
   end
 
   def project_params

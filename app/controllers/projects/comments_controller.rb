@@ -6,6 +6,10 @@ class Projects::CommentsController < CommentsController
   private
 
   def set_commentable
-    @commentable = Project.find(params[:project_id])
+    begin
+      @commentable = Project.find(params[:project_id])
+    rescue ActiveRecord::RecordNotFound
+      render plain: "Project not found", status: :not_found
+    end
   end
 end
