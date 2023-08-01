@@ -1,4 +1,5 @@
  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:turquoise;">
+
   <a class="navbar-brand" href="/leads">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -10,7 +11,6 @@
 
 
       <% if user_signed_in? %>
-
         <li class="nav-item">
         <%= link_to "Leads", leads_path, class: "nav-link" %>
         </li>
@@ -21,9 +21,7 @@
         <li class="nav-item">
         <%= link_to "Projects", projects_path, class: "nav-link" %>
         </li>
-        <% if current_user.image.attached? %>
-        <%= image_tag(current_user.image, style: "display:inline-block ;width:50px ;height: 50px;object-filt:cover; border-radius: 50px;") %>
-        <% end %>
+
         <li class="nav-item">
           <%= link_to "Roles", roles_path, class: "nav-link" %>
         </li>
@@ -34,6 +32,12 @@
         <li class="nav-item">
           <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link btn btn-primary" %>
         </li>
+        <% if current_user.image.attached? %>
+  <div style="position: absolute; top: 0; right: 0;">
+    <%= image_tag(current_user.image, style: "display: inline-block; width: 50px; height: 50px; object-fit: cover; border-radius: 50px;") %>
+  </div>
+
+<% end %>
 
       <% else %>
         <li class="nav-item">

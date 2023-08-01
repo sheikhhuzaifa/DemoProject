@@ -1,10 +1,23 @@
-class PhasesController < ApplicationController
-  before_action :set_lead, except: :set_commentable
-  before_action :set_phase, only: [:show, :edit, :update]
+# frozen_string_literal: true
 
+class PhasesController < ApplicationController
+  before_action :set_lead
+  before_action :set_phase, only: %i[show edit update]
 
   def index
     @phases = @lead.phases
+
+    if params[:query].present?
+      @phases = @lead.phases.where(id: PhasesIndex.query(
+        query_string: {
+          fields: %w[phase_type completed],
+          query: params[:query], default_operator: "AND"
+        }
+      ).load.map(&:id))
+    end
+
+    per_page = (params[:phases_per_page] || 20)
+    @phases = @phases.page(params[:page]).per(per_page)
   end
 
   def new
@@ -30,7 +43,7 @@ class PhasesController < ApplicationController
     if @phase.save
       PhaseMailer.with(phase: @phase).send_mail.deliver_now
       respond_to do |format|
-        format.html {redirect_to lead_phases_path}
+        format.html { redirect_to lead_phases_path }
         format.js
       end
     else
@@ -74,7 +87,7 @@ class PhasesController < ApplicationController
   end
 
   def phase_params
-    params.require(:phase).permit(:phase_type, :start_date, :due_date, :creation_date, :completed, :completed_date, :assignee_id, :lead_id)
+    params.require(:phase).permit(:phase_type, :start_date, :due_date, :creation_date, :completed, :completed_date,
+                                  :assignee_id, :lead_id)
   end
-
 end

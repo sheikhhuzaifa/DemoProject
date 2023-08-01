@@ -1,0 +1,16 @@
+<div style="display: flex; align-items: flex-start;">
+  <%= form_with(url: lead_phases_path, method: :get, html: { style: "display: flex;" }) do |form| %>
+    <%= form.text_field :query, class: "form-control", placeholder: "Search Phase", value: params[:query], style: "width: 400px;" %>
+    <%= form.submit "Search", class: "btn btn-primary", style: "margin-left: 5px;" %>
+    <% if params[:query].present? %>
+      <%= link_to 'Clear', lead_phases_path(lead_id: params['lead_id']), class: 'btn btn-primary', style: "margin-left: 5px;" %>
+    <% end %>
+  <% end %>
+  </div>
+ <div style="display: flex; justify-content: flex-end; margin-top: -35px;">
+  <%= form_tag({ controller: 'phases', action: 'index' }, method: 'get', style: "display: flex;") do %>
+   <%= label_tag 'leads_per_page', 'PAGE:',  style: "margin-top: 5px;" %>
+    <%= text_field_tag 'phases_per_page', params[:phases_per_page] || 10, type: 'number', min: 1, class: "form-control mr-2", style: "width: 60px;" %>
+    <button type="submit" class="btn btn-primary"><i class="fas fa-sync"></i></button>
+  <% end %>
+</div>

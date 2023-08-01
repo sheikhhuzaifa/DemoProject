@@ -1,14 +1,20 @@
-
-<h1 class="mb-4">Phases</h1>
-
+<div class="container mt-4">
+<%= render 'search_form' %>
+ <div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1 class="mb-4">Phases</h1>
+    </div>
+  </div>
+</div>
 <div class="table-responsive">
   <table class="table table-bordered">
 
     <thead>
       <tr>
         <th>Phase Type</th>
-        <th>Start Date</th>
-        <th>Due Date</th>
+        <th>Completed</th>
+
         <th>Actions</th>
       </tr>
     </thead>
@@ -17,12 +23,13 @@
 
         <tr>
           <td><%= phase.phase_type %></td>
-          <td><%= phase.start_date %></td>
-          <td><%= phase.due_date %></td>
+          <td><%= phase.completed %></td>
+
           <td>
 
             <div class="btn-group">
               <%= link_to 'Edit', edit_lead_phase_path(phase.lead, phase), remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editPhaseModal' } %>
+              <%= link_to 'show',  lead_phase_path(phase.lead, phase), class: 'btn btn-primary' %>
               <%= link_to 'Delete', lead_phase_path(phase.lead, phase), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
             </div>
           </td>
@@ -43,3 +50,5 @@
     </div>
   </div>
 </div>
+<%= paginate @phases %>
+<div>

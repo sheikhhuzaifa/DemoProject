@@ -1,10 +1,18 @@
-<h1>Projects</h1>
-
+<div class="container mt-4">
+<%= render 'search_form' %>
+ <div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1 class="mb-4">Projects</h1>
+    </div>
+  </div>
+</div>
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Project Name</th>
       <th>Edit</th>
+       <th>Show</th>
       <th>Select Manager</th>
       <th>Project Manager</th>
     </tr>
@@ -15,6 +23,9 @@
         <td><%= project.project_name %></td>
         <td>
           <%= link_to 'Edit', edit_project_path(project), method: :get, remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#newProjectModal' } %>
+</td>
+<td>
+<%= link_to 'show',  project_path(project), class: 'btn btn-primary' %>
 </td>
 <td>
           <%= form_with(model: project, url: assign_manager_project_path(project), remote: true, class: "needs-validation") do |form| %>
@@ -40,4 +51,6 @@
 
     </div>
   </div>
+</div>
+<%= paginate @projects %>
 </div>

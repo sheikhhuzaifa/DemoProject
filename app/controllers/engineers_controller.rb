@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class EngineersController < ApplicationController
   before_action :set_phase
-  before_action :set_engineer, only: [:show, :edit, :update,:destroy]
+  before_action :set_engineer, only: %i[show edit update destroy]
 
   def index
     @engineers = @phase.engineers
@@ -11,18 +13,16 @@ class EngineersController < ApplicationController
   end
 
   def create
-
     @engineer = @phase.engineers.new(engineer_params)
     @engineer.phase_id = @phase.id
     if @engineer.save
-      redirect_to phase_engineers_path, notice: 'Engineer created successfully.'
+      redirect_to phase_engineers_path, notice: "Engineer created successfully."
     else
       render :new
     end
   end
 
-  def show
-  end
+  def show; end
 
   def edit
     respond_to do |format|
@@ -33,7 +33,7 @@ class EngineersController < ApplicationController
 
   def update
     if @engineer.update(engineer_params)
-      redirect_to phase_engineers_path(@phase), notice: 'Engineer updated successfully.'
+      redirect_to phase_engineers_path(@phase), notice: "Engineer updated successfully."
     else
       render :edit
     end
@@ -41,7 +41,7 @@ class EngineersController < ApplicationController
 
   def destroy
     @engineer.destroy
-    redirect_to phase_engineers_path(@phase), notice: 'Engineer deleted successfully.'
+    redirect_to phase_engineers_path(@phase), notice: "Engineer deleted successfully."
   end
 
   private
@@ -55,6 +55,6 @@ class EngineersController < ApplicationController
   end
 
   def engineer_params
-    params.require(:engineer).permit(:email ,:phase_id)
+    params.require(:engineer).permit(:email, :phase_id)
   end
 end

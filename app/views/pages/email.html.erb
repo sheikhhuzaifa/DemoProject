@@ -9,27 +9,30 @@
           <h2>Subject: <%= email_data[:subject] %></h2>
           <%= email_data[:content].html_safe %>
         </div>
-
-
-
-      <ul>
-        <% @phases.each do |phase| %>
-          <% if (phase.id).to_s == email_data[:subject].to_s %>
-          <% if phase.assignee_id %>
-            <li>
-
-              <%= form_for(phase, url: { action: :accept_phase, id: phase.id }, method: :patch, class: 'accept-form' ) do |f| %>
-                <%= f.submit 'Accept', class: 'accept-button' %>
+        <ul class="list-inline">
+  <% @phases.each do |phase| %>
+    <% if phase.id.to_s == email_data[:subject].to_s %>
+      <% if phase.assignee_id %>
+        <li>
+          <div class="d-flex align-items-center">
+            <div class="mr-2">
+              <%= form_for(phase, url: { action: :accept_phase, id: phase.id }, method: :patch, html: { class: 'accept-form' } ) do |f| %>
+                <%= f.submit 'Accept', class: 'btn btn-success accept-button' %>
               <% end %>
-              <%= form_for(phase, url: { action: :decline_phase, id: phase.id }, method: :patch, class: 'decline-form' ) do |f| %>
-                <%= f.submit 'Decline', class: 'decline-button' %>
+            </div>
+            <div>
+              <%= form_for(phase, url: { action: :decline_phase, id: phase.id }, method: :patch, html: { class: 'decline-form' } ) do |f| %>
+                <%= f.submit 'Decline', class: 'btn btn-danger decline-button' %>
               <% end %>
-            </li>
-            <% end %>
-          <% end %>
-        <% end %>
-        <% end %>
-      </ul>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+  <% end %>
+</ul>
+
+      <% end %>
     </div>
   </div>
 </div>

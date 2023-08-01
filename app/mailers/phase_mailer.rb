@@ -1,5 +1,6 @@
-class PhaseMailer < ApplicationMailer
+# frozen_string_literal: true
 
+class PhaseMailer < ApplicationMailer
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -10,6 +11,6 @@ class PhaseMailer < ApplicationMailer
     user = User.find(@phase.assignee_id)
     email = user.email
 
-    mail to: email ,subject: @phase.id
+    mail to: email, subject: @phase.id
   end
 end

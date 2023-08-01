@@ -1,0 +1,8 @@
+<div class="container">
+  <h1 class="mt-4"><%= @project.project_name %></h1>
+  <p><strong>Assigned Manager ID:</strong> <%= @project.assigned_manager_id %></p>
+  <h2>Comments:</h2>
+  <%= render partial: "comments/comments", locals: { commentable: @project } %>
+  <%= render partial: "comments/form", locals: { commentable: @project } %>
+  <%= link_to 'Back', projects_path, class: 'btn btn-secondary' %>
+</div>

@@ -1,69 +1,78 @@
-
-<h1 class="mb-4">Leads</h1>
-
-<div class="table-responsive">
-  <table class="table table-bordered">
-
-    <thead>
-      <tr>
-        <th>Project Name</th>
-        <th>Creation Date</th>
-        <th>Client Email</th>
-        <th>Sale</th>
-        <th>Sale Date OR action</th>
-
-      </tr>
-    </thead>
-    <tbody>
-      <% @leads.each do |lead| %>
-
-        <tr>
-          <td><%= lead.project_name %></td>
-          <td><%= lead.created_at %></td>
-          <td><%= lead.client_email %></td>
-
-          <% if lead.sale %>
-          <td>Lead Convert into Sale</td>
-          <% elsif %>
-          <td>
-            <% if lead.phases.all?(&:completed) %>
-              <%= form_with(model: lead, local: true) do |form| %>
-  <%= form.check_box :sale %>
-  <% if lead.sale? %>
-    <%= form.hidden_field :sale_date, value: Date.current %>
-  <% else %>
-    <%= form.hidden_field :sale_date, value: nil %>
-  <% end %>
-  <%= form.submit 'Update Sale status' %>
-<% end %>
-
-            <% else %>
-
-              <%= lead.sale %>
-            <% end %>
-          </td>
-
-          <td>
-
-            <div class="btn-group">
-              <%= link_to 'Edit', edit_lead_path(lead), method: :get, remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editLeadModal' } %>
-              <%= link_to 'Delete', lead, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
-              <%= link_to 'Add Phases', lead_phases_path(lead_id: lead.id), class: 'btn btn-primary' %>
-            </div>
-          </td>
-          <% end %>
-           <% if lead.sale %>
-          <td>Completed: <%= lead.sale_date %></td>
-          <% end %>
-       </tr>
-      <% end %>
-
-
-    </tbody>
-  </table>
+<div class="container mt-4">
+<%= render 'search_form' %>
+  <div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1 class="mb-4">Leads</h1>
+    </div>
+  </div>
 </div>
 
-<%= button_to 'New Lead', new_lead_path, method: :get, remote: true, class: 'btn btn-primary mt-4', data: { toggle: 'modal', target: '#newLeadModal' } %>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Project Name</th>
+          <th>Client Name</th>
+          <th>Client Contact</th>
+          <th>Client Email</th>
+          <th>Sale</th>
+          <th>action</th>
+          <th>Sale Date</th>
+        </tr>
+
+      </thead>
+      <tbody>
+        <% @leads.each do |lead| %>
+          <tr>
+            <td><%= lead.project_name %></td>
+            <td><%= lead.client_name %></td>
+            <td><%= lead.client_contact %></td>
+            <td><%= lead.client_email %></td>
+
+  <% if lead.sale %>
+    <td>Lead Convert into Sale</td>
+  <% else %>
+    <td>
+      <% if lead.phases.all?(&:completed) %>
+        <%= form_with(model: lead, local: true) do |form| %>
+          <%= form.check_box :sale %>
+          <% if lead.sale? %>
+            <%= form.hidden_field :sale_date, value: Date.current %>
+          <% else %>
+            <%= form.hidden_field :sale_date, value: nil %>
+          <% end %>
+          <%= form.submit 'Update Sale status' %>
+        <% end %>
+      <% else %>
+        <%= lead.sale %>
+      <% end %>
+    </td>
+  <% end %>
+
+
+            <td>
+
+                <div class="btn-group">
+                  <%= link_to 'Edit', edit_lead_path(lead), method: :get, remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#editLeadModal' } %>
+                  <%= link_to 'Delete', lead, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'Show', lead_path(lead), method: :get, class: 'btn btn-danger' %>
+                  <%= link_to 'Add Phases', lead_phases_path(lead_id: lead.id), class: 'btn btn-primary' %>
+                </div>
+              <% if lead.sale %>
+                <td>Completed: <%= lead.sale_date %></td>
+              <% else %>
+                <td>Not Completed</td>
+              <% end %>
+
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @leads %>
+  </div>
+  <%= button_to 'New Lead', new_lead_path, method: :get, remote: true, class: 'btn btn-primary mt-4', data: { toggle: 'modal', target: '#newLeadModal' } %>
 
 
 <div class="modal fade" id="newLeadModal" tabindex="-1" role="dialog" aria-labelledby="newLeadModalLabel" aria-hidden="true">
@@ -72,4 +81,5 @@
 
     </div>
   </div>
+</div>
 </div>
