@@ -31,6 +31,7 @@ gem "jbuilder", "~> 2.7"
 gem "awesome_print"
 gem "bootsnap", ">= 1.4.4", require: false
 gem "bootstrap", "~> 5.1"
+
 gem "devise"
 gem "kaminari"
 gem "pundit"
@@ -41,6 +42,7 @@ gem "launchy"
 gem "ransack"
 gem "rubocop"
 gem "sidekiq-scheduler"
+gem "cocoon"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

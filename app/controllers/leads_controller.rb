@@ -31,7 +31,7 @@ class LeadsController < ApplicationController
 
   def new
     @lead = Lead.new
-
+    @lead.comments.build
     respond_to do |format|
       format.html
       format.js
@@ -45,7 +45,7 @@ class LeadsController < ApplicationController
     if @lead.save
       redirect_to @lead
     else
-      render :new
+      redirect_to @lead, alert: "Lead details not Created"
     end
   end
 
@@ -96,7 +96,7 @@ class LeadsController < ApplicationController
 
   def lead_params
     params.require(:lead).permit(:project_name, :client_name, :client_address, :client_email, :client_contact,
-                                 :platform_used, :test_type, :bd_id, :sale, :sale_date)
+                                 :platform_used, :test_type, :bd_id, :sale, :sale_date,comments_attributes: [:id, :content])
   end
 
   def search_params

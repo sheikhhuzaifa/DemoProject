@@ -11,6 +11,7 @@ class Lead < ApplicationRecord
 
   has_one :project, dependent: :destroy
 
+  accepts_nested_attributes_for :comments
   scope :sort_by_client, -> { order(:client_name) }
 
 end

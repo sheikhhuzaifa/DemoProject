@@ -5,9 +5,16 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :check_user_signed_in, unless: :devise_controller?
   rescue_from   Pundit::NotAuthorizedError, with: :handle_not_authorized
+  layout :choose_layout
 
   private
-
+  def choose_layout
+    if controller_name == 'projects' && action_name == 'index'
+      'application4'
+    else
+      'application'
+    end
+  end
   def check_user_signed_in
     return if user_signed_in?
 
