@@ -40,6 +40,7 @@ gem "font-awesome-sass"
 gem "launchy"
 gem "ransack"
 gem "rubocop"
+gem "sidekiq-scheduler"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -70,3 +71,5 @@ end
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 gem "chewy"
+
+gem "sidekiq"

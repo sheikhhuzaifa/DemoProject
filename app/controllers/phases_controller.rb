@@ -29,14 +29,11 @@ class PhasesController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    @decorated_phase = PhaseDecorator.new(@phase)
   end
 
   def create
-    @phase = @lead.phases.new(phase_params)
+    @phase = @lead.phases.build(phase_params)
     @phase.lead_id = @lead.id
     authorize @phase
 
@@ -65,7 +62,7 @@ class PhasesController < ApplicationController
 
       redirect_to lead_phases_path
     else
-      render :edit
+      redirect_to lead_phases_path, alert: "Phase Detail Not Updated"
     end
   end
 
@@ -79,15 +76,24 @@ class PhasesController < ApplicationController
   private
 
   def set_lead
-    @lead = Lead.find(params[:lead_id])
+    begin
+      @lead = Lead.find(params[:lead_id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "Lead not found."
+      redirect_to leads_path
+    end
   end
 
   def set_phase
-    @phase = @lead.phases.find(params[:id])
+    begin
+      @phase = @lead.phases.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "Phase not found."
+      redirect_to lead_path(@lead)
+    end
   end
 
   def phase_params
-    params.require(:phase).permit(:phase_type, :start_date, :due_date, :creation_date, :completed, :completed_date,
-                                  :assignee_id, :lead_id)
+    params.require(:phase).permit(:phase_type, :start_date, :due_date, :creation_date, :completed, :completed_date, :assignee_id, :lead_id)
   end
 end

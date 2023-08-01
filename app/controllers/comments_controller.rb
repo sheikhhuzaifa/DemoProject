@@ -5,8 +5,12 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.new(comment_params)
     authorize @comment
-    @comment.save
-    redirect_to root_path, notice: "Your Comment was successfully posted"
+    if @comment.save
+      redirect_to root_path, notice: "Your Comment was successfully posted"
+    else
+      flash.now[:alert] = "Error: Failed to post your comment."
+      redirect_to root_path
+    end
   end
 
   private

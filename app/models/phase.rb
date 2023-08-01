@@ -6,7 +6,7 @@ class Phase < ApplicationRecord
   belongs_to :lead, foreign_key: :lead_id
 
   has_many :engineers, dependent: :destroy
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   def self.ransackable_attributes(_auth_object = nil)
     ["phase_type"]

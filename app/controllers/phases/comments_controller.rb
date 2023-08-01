@@ -6,6 +6,11 @@ class Phases::CommentsController < CommentsController
   private
 
   def set_commentable
-    @commentable = Phase.find(params[:phase_id])
+
+    begin
+      @commentable = Phase.find(params[:phase_id])
+    rescue ActiveRecord::RecordNotFound
+      render plain: "Phase not found", status: :not_found
+    end
   end
 end
