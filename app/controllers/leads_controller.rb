@@ -45,9 +45,11 @@ class LeadsController < ApplicationController
     if @lead.save
       redirect_to @lead
     else
-      redirect_to @lead, alert: "Lead details not Created"
+      flash[:alert] = "Lead details not created: " + @lead.errors.full_messages.join(", ")
+      redirect_to @lead
     end
   end
+
 
   def edit
     respond_to do |format|
@@ -96,7 +98,7 @@ class LeadsController < ApplicationController
 
   def lead_params
     params.require(:lead).permit(:project_name, :client_name, :client_address, :client_email, :client_contact,
-                                 :platform_used, :test_type, :bd_id, :sale, :sale_date,comments_attributes: [:id, :content])
+                                 :platform_used, :test_type, :bd_id, :sale, :sale_date,comments_attributes: [:id, :content,:commentable_id, :commentable_type,:_destroy])
   end
 
   def search_params

@@ -39,14 +39,18 @@
 
  <div id="comments">
     <%= form.fields_for :comments do |comment_form| %>
+      <%= comment_form.hidden_field :commentable_id, value: @lead.id %>
       <%= render 'comment_fields', f: comment_form %>
     <% end %>
   </div>
-  <div class="add-comment-button">
-    <%= link_to_add_association 'Add Comment', form, :comments ,class: "btn btn-primary"%>
-  </div>
 
-  <div class="form-group">
+
+  <div class="form-actions">
     <%= form.submit "Submit", class: "btn btn-primary" %>
+
+    <%= link_to_add_association 'Add Comment', form, :comments, class: "btn btn-primary", data: {
+      association_insertion_node: '#comments', association_insertion_method: :append
+    } %>
+
   </div>
 <% end %>

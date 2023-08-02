@@ -5,6 +5,7 @@ class Phase < ApplicationRecord
   validate :start_date_must_be_less_than_due_date
   validates :phase_type, :start_date, :due_date, presence: true
   belongs_to :lead, foreign_key: :lead_id
+  belongs_to :user,foreign_key: :assignee_id
 
   has_many :engineers, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy

@@ -43,6 +43,7 @@ gem "ransack"
 gem "rubocop"
 gem "sidekiq-scheduler"
 gem "cocoon"
+gem 'simplecov'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -50,6 +51,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'shoulda-matchers'
 end
 
 
