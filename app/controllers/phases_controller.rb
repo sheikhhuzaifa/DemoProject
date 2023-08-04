@@ -44,7 +44,7 @@ class PhasesController < ApplicationController
         format.js
       end
     else
-      render :new
+      redirect_to lead_phases_path, alert: "Phase Detail Not Created"
     end
   end
 

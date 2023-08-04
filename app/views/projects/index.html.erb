@@ -19,9 +19,10 @@
     </thead>
     <tbody>
       <% @projects.each do |project| %>
-      <% presenter = ProjectPresenter.new(project) %>
+      <%# <% presenter = ProjectPresenter.new(project) %>
+       <%# <% result = Project.new(project) %>
         <tr>
-          <td><%= presenter.project_name %></td>
+          <td><%= project.project_name %></td>
           <td>
           <%= link_to 'Edit', edit_project_path(project), method: :get, remote: true, class: 'btn btn-secondary', data: { toggle: 'modal', target: '#newProjectModal' } %>
 </td>

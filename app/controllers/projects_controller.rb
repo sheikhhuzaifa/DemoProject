@@ -19,6 +19,8 @@ class ProjectsController < ApplicationController
     end
     per_page = (params[:projects_per_page] || 10)
     @projects = @projects.page(params[:page]).per(per_page)
+
+
   end
 
   def update
@@ -28,6 +30,7 @@ class ProjectsController < ApplicationController
       render :edit
     end
   end
+
 
   def assign_manager
     @project = Project.find(params[:id])

@@ -2,5 +2,6 @@
 
 # Enginner
 class Engineer < ApplicationRecord
-  belongs_to :phase, foreign_key: :phase_id
+  belongs_to :phase
+  validates :email, presence: true
 end
