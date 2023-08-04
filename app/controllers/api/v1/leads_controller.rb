@@ -1,22 +1,22 @@
 class Api::V1::LeadsController < Api::V1::ApiBaseController
-  skip_before_action :verify_authenticity_token, only: [:create, :destroy,:update]
+  before_action :set_lead, only: %i[show update destroy]
   def index
     leads=Lead.all
     render json: leads, status:200
   end
 
   def show
-    lead=Lead.find(params[:id])
-    if lead
-      render json: lead, status:200
+
+    if @lead
+      render json: @lead, status:200
     else
       render json: {error: "Not Found"}
     end
   end
   def update
-    lead=Lead.find(params[:id])
-    if lead.update(lead_params)
-      render json: lead, status:200
+
+    if @lead.update(lead_params)
+      render json: @lead, status:200
     else
       render json: {error: "Not Update"}
     end
@@ -43,7 +43,6 @@ class Api::V1::LeadsController < Api::V1::ApiBaseController
     end
   end
   def destroy
-    @lead = Lead.find_by(id: params[:id])
     if @lead.nil?
       render json: { error: "Lead not found" }, status: :not_found
     else
@@ -52,6 +51,13 @@ class Api::V1::LeadsController < Api::V1::ApiBaseController
     end
   end
   private
+  def set_lead
+    begin
+      @lead = Lead.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "Lead not found" }, status: :not_found
+    end
+  end
   def lead_params
     params.require(:lead).permit(:project_name, :client_name, :client_address, :client_email, :client_contact,
                                  :platform_used, :test_type, :bd_id, :sale, :sale_date)

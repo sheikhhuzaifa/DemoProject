@@ -44,6 +44,7 @@ gem "rubocop"
 gem "sidekiq-scheduler"
 gem "cocoon"
 gem 'simplecov'
+gem 'active_model_serializers'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
