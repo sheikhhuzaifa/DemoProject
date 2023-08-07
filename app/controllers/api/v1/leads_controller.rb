@@ -1,5 +1,4 @@
 class Api::V1::LeadsController < Api::V1::ApiBaseController
-  include ErrorSerializer
   before_action :set_lead, only: %i[show update destroy]
 
   def index
@@ -7,7 +6,8 @@ class Api::V1::LeadsController < Api::V1::ApiBaseController
     if leads.any?
       render json: leads, status: :ok
     else
-      render json: ErrorSerializer.serialize("Leads not found",404),status: :not_found
+      error_serializer = ErrorSerializer.new(title: "Lead Not found", status: :not_found)
+      render json: error_serializer.to_h,status: :not_found
     end
   end
 
@@ -15,7 +15,8 @@ class Api::V1::LeadsController < Api::V1::ApiBaseController
     if @lead
       render json: @lead, status: :ok
     else
-      render json: ErrorSerializer.serialize("Lead not found",404),status: :not_found
+      error_serializer = ErrorSerializer.new(title: "Lead Not found", status: :not_found)
+      render json: error_serializer.to_h,status: :not_found
     end
   end
 
@@ -23,7 +24,8 @@ class Api::V1::LeadsController < Api::V1::ApiBaseController
     if @lead.update(lead_params)
       render json: @lead, status: :ok
     else
-      render json: ErrorSerializer.serialize("Lead not Update",422),status: :unprocessable_entity
+      error_serializer = ErrorSerializer.new(title: "Lead not Update", status: :unprocessable_entity)
+      render json: error_serializer.to_h,status: :unprocessable_entity
     end
   end
 
@@ -32,13 +34,15 @@ class Api::V1::LeadsController < Api::V1::ApiBaseController
     if lead.save
       render json: lead, status: :created
     else
-      render json: ErrorSerializer.serialize("Lead not Create",422),status: :unprocessable_entity
+      error_serializer = ErrorSerializer.new(title: "Lead not Create", status: :unprocessable_entity)
+      render json: error_serializer.to_h,status: :unprocessable_entity
     end
   end
 
   def destroy
     if @lead.nil?
-      render json: ErrorSerializer.serialize("Lead not found",404),status: :not_found
+      error_serializer = ErrorSerializer.new(title: "Lead Not found", status: :not_found)
+      render json: error_serializer.to_h,status: :not_found
     else
       @lead.destroy
       render json: { message: "Lead deleted successfully" }, status: :ok
@@ -51,7 +55,8 @@ class Api::V1::LeadsController < Api::V1::ApiBaseController
     begin
       @lead = Lead.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      render json: ErrorSerializer.serialize("Lead not found", 404), status: :not_found
+      error_serializer = ErrorSerializer.new(title: "Lead Not found", status: :not_found)
+      render json: error_serializer.to_h,status: :not_found
     end
   end
 
